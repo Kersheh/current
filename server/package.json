@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }
