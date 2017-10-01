@@ -1,8 +1,9 @@
+const router = require('express').Router();
 const fs = require('fs');
-const path = require('path');
 
-function handler(req, res, next) {
-  const path = 'cache/Rick and Morty S03E07 - The Ricklantis Mixup [1080p].mkv';
+router.get('/:video', (req, res) => {
+  const filename = req.params.video;
+  const path = 'cache/' + filename;
   const stat = fs.statSync(path);
   const fileSize = stat.size;
   const range = req.headers.range;
@@ -31,7 +32,6 @@ function handler(req, res, next) {
     res.writeHead(200, head);
     fs.createReadStream(path).pipe(res);
   }
-  next();
-};
+});
 
-module.exports = { get: handler };
+module.exports = router;
