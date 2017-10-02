@@ -46,11 +46,11 @@ class FileHelper {
     let video, file, head, status;
     video = _.find(this.videos, (video) => { return video.id === id; });
 
-    const filePath = VIDEOS_PATH + '/' + video.name + '.' + video.ext;
+    const filePath = this.path + '/' + video.name + '.' + video.ext;
     const stat = fs.statSync(filePath);
     const fileSize = stat.size;
 
-    if(range > 0) {
+    if(range) {
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
       const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
