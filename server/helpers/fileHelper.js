@@ -2,6 +2,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const watch = require('node-watch');
+const crc = require('crc');
 
 const VIDEOS_PATH = path.join(__dirname, '../videos');
 
@@ -25,9 +26,9 @@ class FileHelper {
       if (err) {
         throw new Error({ error: 'Something failed!' });
       } else {
-        _.each(files, (file, i) => {
+        _.each(files, file => {
           videos.push({
-            id: i,
+            id: crc.crc32(file.split('.')[0]).toString(16),
             name: file.split('.')[0],
             ext: file.split('.')[1]
           });

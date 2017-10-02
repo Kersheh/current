@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "crc": "^3.5.0",
     "express": "^4.16.0",
     "gulp": "^3.9.1",
     "lodash": "^4.17.4",
