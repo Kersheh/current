@@ -2,10 +2,16 @@
   {{title}}
 </h1>
 
-<h2>videos <button (click)="loadVideoList()">refresh</button></h2>
-<ul>
-  <div *ngIf="!videos || videos.length < 1">no videos found</div>
-  <li *ngFor="let video of videos">
-    {{ video.name }}
-  </li>
-</ul>
+<div id="video-list" *ngIf='show_list'>
+  <h2>videos <button (click)="loadVideoList()">refresh</button></h2>
+  <ul>
+    <div *ngIf="!videos || videos.length < 1">no videos found</div>
+    <li *ngFor="let video of videos">
+      {{ video.name }} <button (click)="watchVideo(video)">watch</button>
+    </li>
+  </ul>
+</div>
+
+<video width="800" [src]="video_url" controls *ngIf='!show_list'>
+    Your browser does not support HTML5 video.
+</video>

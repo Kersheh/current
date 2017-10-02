@@ -9,7 +9,11 @@ import { VideoService } from './shared/video.service';
 export class AppComponent {
   title = 'current';
   videos: Array<any>;
-  constructor(private _videoService: VideoService) {}
+  show_list: boolean = true;
+  video_url: string;
+  constructor(private _videoService: VideoService) {
+    this.loadVideoList();
+  }
 
   loadVideoList = () => {
     this._videoService.getVideos().subscribe(
@@ -23,6 +27,7 @@ export class AppComponent {
   }
 
   watchVideo = (video) => {
-    // show html5 player with url for request
+    this.show_list = false;
+    this.video_url = 'http://127.0.0.1:3000/video/' + video.id;
   }
 }
