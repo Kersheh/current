@@ -1,3 +1,11 @@
 <h1>
   {{title}}
 </h1>
+
+<h2>videos <button (click)="loadVideoList()">refresh</button></h2>
+<ul>
+  <div *ngIf="!videos || videos.length < 1">no videos found</div>
+  <li *ngFor="let video of videos">
+    {{ video.name }}
+  </li>
+</ul>
