@@ -8,7 +8,8 @@
   "dependencies": {
     "express": "^4.16.0",
     "gulp": "^3.9.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "node-watch": "^0.5.5"
   },
   "devDependencies": {
     "eslint": "^4.7.2",
