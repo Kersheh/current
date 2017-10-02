@@ -23,7 +23,7 @@ class FileHelper {
   _readVideoFiles() {
     let videos = [];
     fs.readdir(this.path, (err, files) => {
-      if (err) {
+      if(err) {
         throw new Error({ error: 'Something failed!' });
       } else {
         _.each(files, file => {
@@ -43,9 +43,10 @@ class FileHelper {
   }
 
   streamVideo(id, range = 0) {
-    let file, head, status;
-    const filePath = VIDEOS_PATH + '/' + this.videos[id].name + '.' + this.videos[id].ext;
-    const fileExt = path.extname(filePath);
+    let video, file, head, status;
+    video = _.find(this.videos, (video) => { return video.id === id; });
+
+    const filePath = VIDEOS_PATH + '/' + video.name + '.' + video.ext;
     const stat = fs.statSync(filePath);
     const fileSize = stat.size;
 
@@ -59,14 +60,14 @@ class FileHelper {
         'Content-Range': `bytes ${start}-${end}/${fileSize}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunkSize,
-        'Content-Type': 'video/' + fileExt
+        'Content-Type': 'video/' + video.ext
       };
       file = fs.createReadStream(filePath, { start, end });
       status = 206;
     } else {
       head = {
         'Content-Length': fileSize,
-        'Content-Type': 'video/' + fileExt
+        'Content-Type': 'video/' + video.ext
       };
       file = fs.createReadStream(filePath);
       status = 200;
