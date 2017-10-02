@@ -27,8 +27,9 @@ class FileHelper {
       } else {
         _.each(files, (file, i) => {
           videos.push({
-            'id': i,
-            'name': file
+            id: i,
+            name: file.split('.')[0],
+            ext: file.split('.')[1]
           });
         });
         this.videos = videos;
@@ -42,7 +43,7 @@ class FileHelper {
 
   streamVideo(id, range = 0) {
     let file, head, status;
-    const filePath = VIDEOS_PATH + '/' + this.videos[id].name;
+    const filePath = VIDEOS_PATH + '/' + this.videos[id].name + '.' + this.videos[id].ext;
     const fileExt = path.extname(filePath);
     const stat = fs.statSync(filePath);
     const fileSize = stat.size;
