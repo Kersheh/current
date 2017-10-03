@@ -3,38 +3,52 @@ const fs = require('fs');
 const path = require('path');
 const watch = require('node-watch');
 const crc = require('crc');
+const logger = require('./logHelper');
 
-const VIDEOS_PATH = path.join(__dirname, '../videos');
+const VIDEOS_PATH = path.join(__dirname, '../../../../Movies');
 
 class FileHelper {
   constructor(path) {
     this.path = path;
     this.videos = [];
-    this._readVideoFiles();
-    this._watchVideoFolder();
+    this._readVideoFiles()
+      .then(() => this._watchVideoFolder())
+      .catch((err) => {
+        logger.log(err);
+      });
   }
 
   _watchVideoFolder() {
     watch(this.path, { recursive: true }, (evt, name) => {
-      this._readVideoFiles();
+      this._readVideoFiles()
+        .catch((err) => {
+          logger.log(err);
+        });
     });
   }
 
   _readVideoFiles() {
-    let videos = [];
-    fs.readdir(this.path, (err, files) => {
-      if(err) {
-        throw new Error({ error: 'Something failed!' });
-      } else {
-        _.each(files, file => {
-          videos.push({
-            id: crc.crc32(file.split('.')[0]).toString(16),
-            name: file.split('.')[0],
-            ext: file.split('.')[1]
+    return new Promise((resolve, reject) => {
+      let videos = [];
+      fs.readdir(this.path, (err, files) => {
+        if(err) {
+          this.videos = null;
+          reject({
+            msg: 'Server restart required: Video path "' + VIDEOS_PATH + '" not found',
+            status: 500
           });
-        });
-        this.videos = videos;
-      }
+        } else {
+          _.each(files, file => {
+            videos.push({
+              id: crc.crc32(file.split('.')[0]).toString(16),
+              name: file.split('.')[0],
+              ext: file.split('.')[1]
+            });
+          });
+          this.videos = videos;
+          resolve();
+        }
+      });
     });
   }
 
