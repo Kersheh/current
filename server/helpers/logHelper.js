@@ -10,7 +10,7 @@ function _validateLogDir() {
   }
 }
 
-function _writeLog(log, err) {
+function _writeLog(log) {
   const date = moment().format('YYYY-MM-DD');
   const time = moment().format('h:mm:ss a');
   const msg = `[${time}] Status: ${log.status} | Msg: ${log.msg}\n`;
@@ -21,17 +21,18 @@ function _writeLog(log, err) {
     }
   });
 
-  const color = err ? '\x1b[31m' : '\x1b[33m';
+  const color = log.err ? '\x1b[31m' : '\x1b[33m';
   console.log(color, msg);
 }
 
-function log(msg, err = false) {
+function log(msg) {
   const log = {
     msg: msg.msg,
-    status: msg.status
+    status: msg.status,
+    err: msg.err || false
   };
   _validateLogDir();
-  _writeLog(log, err);
+  _writeLog(log);
 }
 
 module.exports = {
