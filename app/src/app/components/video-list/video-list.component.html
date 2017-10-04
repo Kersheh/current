@@ -1,0 +1,7 @@
+<h2>videos <button (click)="load()">refresh</button></h2>
+<ul>
+  <div *ngIf="!videos || videos.length < 1">no videos found</div>
+  <li *ngFor="let video of videos">
+    {{ video.name }} <button (click)="watch(video)">watch</button>
+  </li>
+</ul>
