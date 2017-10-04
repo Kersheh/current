@@ -4,7 +4,7 @@ const logger = require('~/helpers/logHelper');
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
-  const range = req.headers.range || 0;
+  const range = req.headers.range;
 
   fileHelper.streamVideo(id, range)
     .then((video) => {
