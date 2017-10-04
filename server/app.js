@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./handlers');
+const routes = require('~/handlers');
 const app = express();
 
 app.use(function(req, res, next) {
