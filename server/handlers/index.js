@@ -1,5 +1,5 @@
-const video = require('./video');
-const videos = require('./videos');
+const video = require('~/handlers/video');
+const videos = require('~/handlers/videos');
 
 module.exports = {
   video,

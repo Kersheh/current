@@ -11,7 +11,8 @@
     "gulp": "^3.9.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "node-watch": "^0.5.5"
+    "node-watch": "^0.5.5",
+    "wavy": "^1.0.4"
   },
   "devDependencies": {
     "eslint": "^4.7.2",

@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const watch = require('node-watch');
 const crc = require('crc');
-const logger = require('./logHelper');
+const logger = require('~/helpers/logHelper');
 
-const VIDEOS_PATH = path.join(__dirname, '../../../../Movies');
+const VIDEOS_DIR = path.join(__dirname, '../videos');
 
 class FileHelper {
   constructor(path) {
@@ -14,7 +14,7 @@ class FileHelper {
     this._readVideoFiles()
       .then(() => this._watchVideoFolder())
       .catch((err) => {
-        logger.log(err);
+        logger.log(err, true);
       });
   }
 
@@ -22,7 +22,7 @@ class FileHelper {
     watch(this.path, { recursive: true }, (evt, name) => {
       this._readVideoFiles()
         .catch((err) => {
-          logger.log(err);
+          logger.log(err, true);
         });
     });
   }
@@ -34,7 +34,7 @@ class FileHelper {
         if(err) {
           this.videos = null;
           reject({
-            msg: 'Server restart required: Video path "' + VIDEOS_PATH + '" not found',
+            msg: 'Server restart required! Video path "' + VIDEOS_DIR + '" not found',
             status: 500
           });
         } else {
@@ -57,7 +57,7 @@ class FileHelper {
   }
 
   streamVideo(id, range = 0) {
-    let video, file, head, status;
+    let video, stream, head, status;
     video = _.find(this.videos, (video) => { return video.id === id; });
 
     const filePath = this.path + '/' + video.name + '.' + video.ext;
@@ -76,18 +76,18 @@ class FileHelper {
         'Content-Length': chunkSize,
         'Content-Type': 'video/' + video.ext
       };
-      file = fs.createReadStream(filePath, { start, end });
+      stream = fs.createReadStream(filePath, { start, end });
       status = 206;
     } else {
       head = {
         'Content-Length': fileSize,
         'Content-Type': 'video/' + video.ext
       };
-      file = fs.createReadStream(filePath);
+      stream = fs.createReadStream(filePath);
       status = 200;
     }
-    return { head, file, status };
+    return { head, stream, status };
   }
 }
 
-module.exports = new FileHelper(VIDEOS_PATH);
+module.exports = new FileHelper(VIDEOS_DIR);

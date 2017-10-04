@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const fileHelper = require('../helpers/fileHelper');
+const fileHelper = require('~/helpers/fileHelper');
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;

@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const router = require('express').Router();
-const fileHelper = require('../helpers/fileHelper')
+const fileHelper = require('~/helpers/fileHelper')
 
 router.get('/', (req, res) => {
   let videos = fileHelper.getListOfVideos();
