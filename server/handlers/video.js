@@ -12,8 +12,7 @@ router.get('/:id', (req, res) => {
       video.stream.pipe(res);
     }).catch((err) => {
       logger.log(err);
-      res.status(404);
-      res.send();
+      res.status(404).send();
     });
 });
 

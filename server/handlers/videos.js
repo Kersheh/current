@@ -4,21 +4,16 @@ const fileHelper = require('~/helpers/fileHelper')
 
 router.get('/', (req, res) => {
   let videos = fileHelper.getListOfVideos();
+  let status;
 
-  switch(videos) {
-    case _.isNull(videos):
-      res.status(500);
-      videos = [];
-      break;
-    case videos.length > 0:
-      res.status(200);
-      break;
-    case videos.length === 0:
-      res.status(204);
-      break;
+  if(_.isNull(videos)) {
+    videos = [];
+    status = 500;
+  } else {
+    status = videos.length > 0 ? 200 : 204;
   }
 
-  res.send(videos);
+  res.status(status).send(videos);
 });
 
 module.exports = router;
