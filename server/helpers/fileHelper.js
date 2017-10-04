@@ -20,7 +20,7 @@ class FileHelper {
   }
 
   _watchVideoFolder() {
-    watch(this.path, { recursive: true }, (evt, name) => {
+    watch(this.path, { recursive: false }, (evt, name) => {
       this._readVideoFiles()
         .catch((err) => {
           logger.log(err, true);
@@ -36,17 +36,20 @@ class FileHelper {
         if(err) {
           this.videos = null;
           return reject({
-            msg: 'Server restart required! Video path "' + VIDEOS_DIR + '" not found',
+            msg: `Server restart required! Video path ${VIDEOS_DIR} not found`,
             status: 500,
             err: true
           });
         } else {
           _.each(files, file => {
-            videos.push({
-              id: crc.crc32(file.split('.')[0]).toString(16),
-              name: file.split('.')[0],
-              ext: file.split('.')[1]
-            });
+            if(!_.isUndefined(file.split('.')[1])) { // naive check if file is not a directory
+              // naive filename split assumes filename contains a single dot
+              videos.push({
+                id: crc.crc32(file.split('.')[0]).toString(16),
+                name: file.split('.')[0],
+                ext: file.split('.')[1]
+              });
+            }
           });
           this.videos = videos;
           return resolve();
@@ -72,13 +75,13 @@ class FileHelper {
         })
       }
 
-      const filePath = this.path + '/' + video.name + '.' + video.ext;
+      const filePath = `${this.path}/${video.name}.${video.ext}`;
 
       fileExists(filePath)
         .then((exists) => {
           if(!exists) {
             return reject({
-              msg: `Video id exists but file not found!`,
+              msg: `Video id '${id}' exists but file not found!`,
               status: 500,
               err: true
             });
@@ -97,14 +100,14 @@ class FileHelper {
               'Content-Range': `bytes ${start}-${end}/${fileSize}`,
               'Accept-Ranges': 'bytes',
               'Content-Length': chunkSize,
-              'Content-Type': 'video/' + video.ext
+              'Content-Type': `video/${video.ext}`
             };
             stream = fs.createReadStream(filePath, { start, end });
             status = 206;
           } else {
             head = {
               'Content-Length': fileSize,
-              'Content-Type': 'video/' + video.ext
+              'Content-Type': `video/${video.ext}`
             };
             stream = fs.createReadStream(filePath);
             status = 200;
