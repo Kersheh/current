@@ -1,1 +1,36 @@
+@import '../../../colors';
 
+#video-list-controls {
+  text-align: center;
+}
+
+.video {
+  font-size: 1.5em;
+  padding: 5px;
+  margin: 5px;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  color: $rich-black;
+  background-color: $rich-black;
+  box-shadow: 0 0px 5px rgba(0,0,0,.24);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+  flex: 1;
+  display: inline-block;
+
+  .video-name {
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+}
+.container {
+  flex-wrap: wrap;
+  flex-flow: column wrap;
+  display: block;
+}

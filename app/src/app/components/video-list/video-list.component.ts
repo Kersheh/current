@@ -9,8 +9,18 @@ import { VideoService } from '../../shared/video.service';
 export class VideoListComponent {
   title = 'current';
   videos: Array<any>;
+  hide: boolean = false;
+
   constructor(private _videoService: VideoService) {
     this.load();
+
+    this._videoService.getVideo().subscribe((video) => {
+      if(video.url) {
+        this.hide = true;
+      } else {
+        this.hide = false;
+      }
+    });
   }
 
   load = () => {
@@ -22,6 +32,10 @@ export class VideoListComponent {
         console.error('Error fetching video list');
       }
     );
+  }
+
+  randomColor = (): string => {
+    return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
   }
 
   watch = (video) => {
