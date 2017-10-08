@@ -14,9 +14,7 @@ class FileHelper {
     this.videos = [];
     this._readVideoFiles()
       .then(() => this._watchVideoFolder())
-      .catch((err) => {
-        throw err;
-      });
+      .catch(() => console.log('\x1b[31m', 'SEVERE ERROR: Server restart required.'));
   }
 
   _watchVideoFolder() {
