@@ -1,8 +1,12 @@
 const router = require('express').Router();
 const metadataHelper = require('~/helpers/metadataHelper');
+const ffmpegHelper = require('~/helpers/ffmpegHelper');
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
+
+  // test
+  ffmpegHelper.getVideoThumbnail(id);
 
   metadataHelper.getMetadata(id)
     .then((metadata) => {
