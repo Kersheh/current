@@ -5,13 +5,13 @@ const crc = require('crc');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const ErrorHelper = require('~/helpers/errorHelper');
+const db = require('~/helpers/tempDatabase');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 
 class FileHelper {
   constructor(path) {
     this.path = path;
-    this.videos = [];
     this._readVideoFiles()
       .then(() => this._watchVideoFolder())
       .catch(() => console.log('\x1b[31m', 'SEVERE ERROR: Server restart required.'));
@@ -38,9 +38,9 @@ class FileHelper {
             });
           }
         });
-        this.videos = videos;
+        db.videos = videos;
       }).catch(() => {
-        this.videos = null;
+        db.videos = null;
         throw new ErrorHelper({
           message: `Video path ${VIDEOS_DIR} not found`,
           status: 500,
@@ -50,11 +50,11 @@ class FileHelper {
   }
 
   getListOfVideos() {
-    return this.videos;
+    return db.videos;
   }
 
   streamVideo(id, range = 0) {
-    let video = _.find(this.videos, (video) => { return video.id === id; });
+    let video = _.find(db.videos, (video) => { return video.id === id; });
     let filePath;
 
     return new Promise((resolve) => {
@@ -65,7 +65,7 @@ class FileHelper {
         });
       }
 
-      filePath = `${this.path}/${video.name}.${video.ext}`;
+      filePath = `${this.path}/${video.name}.${video.type}`;
       resolve();
     }).then(() => fs.statAsync(filePath))
       .catch((err) => {
@@ -91,14 +91,14 @@ class FileHelper {
             'Content-Range': `bytes ${start}-${end}/${fileSize}`,
             'Accept-Ranges': 'bytes',
             'Content-Length': chunkSize,
-            'Content-Type': `video/${video.ext}`
+            'Content-Type': `video/${video.type}`
           };
           stream = fs.createReadStream(filePath, { start, end });
           status = 206;
         } else {
           head = {
             'Content-Length': fileSize,
-            'Content-Type': `video/${video.ext}`
+            'Content-Type': `video/${video.type}`
           };
           stream = fs.createReadStream(filePath);
           status = 200;

@@ -9,6 +9,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/metadata', routes.metadata);
 app.use('/video', routes.video);
 app.use('/videos', routes.videos);
 
