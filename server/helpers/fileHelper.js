@@ -29,12 +29,12 @@ class FileHelper {
     return fs.readdirAsync(this.path)
       .then((files) => {
         _.each(files, file => {
-          if(!_.isUndefined(file.split('.')[1])) {
-            // naive filename split assumes filename contains a single dot
+          if(_validFileName(file)) {
+            let fileSplit = file.split('.');
             videos.push({
-              id: crc.crc32(file.split('.')[0]).toString(16),
-              name: file.split('.')[0],
-              type: file.split('.')[1]
+              id: crc.crc32(fileSplit[0]).toString(16),
+              name: fileSplit.slice(0, -1).toString(),
+              type: fileSplit[fileSplit.length - 1]
             });
           }
         });
@@ -107,6 +107,10 @@ class FileHelper {
         return({ head, stream, status });
       });
   }
+}
+
+function _validFileName(file) {
+  return /^[^.][\w\s[\].-]+[^.]$/i.test(file);
 }
 
 module.exports = new FileHelper(VIDEOS_DIR);
