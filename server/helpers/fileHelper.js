@@ -34,7 +34,7 @@ class FileHelper {
             videos.push({
               id: crc.crc32(file.split('.')[0]).toString(16),
               name: file.split('.')[0],
-              ext: file.split('.')[1]
+              type: file.split('.')[1]
             });
           }
         });
