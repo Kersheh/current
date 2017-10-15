@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
 const ErrorHelper = require('~/helpers/errorHelper');
+const ffmpegHelper = require('~/helpers/ffmpegHelper');
 const db = require('~/helpers/tempDatabase');
 
 function getMetadata(id) {
@@ -14,7 +15,16 @@ function getMetadata(id) {
       });
     }
 
-    resolve(metadata);
+    ffmpegHelper.getVideoThumbnail(id)
+      .then((data) => {
+        _.assign(metadata, {
+          thumbnail: {
+            img: data,
+            contentType: 'image/png'
+          }
+        });
+        resolve(metadata);
+      });
   });
 }
 
