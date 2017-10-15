@@ -6,7 +6,7 @@ router.get('/:id', (req, res) => {
   const id = req.params.id;
 
   // test
-  ffmpegHelper.getVideoThumbnail(id);
+  ffmpegHelper.saveVideoThumbnail(id);
 
   metadataHelper.getMetadata(id)
     .then((metadata) => {
