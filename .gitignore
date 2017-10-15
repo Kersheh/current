@@ -1,4 +1,9 @@
+# General
 .DS_Store
 npm-debug.log
 */node_modules
+
+# Server
 /server/log
+/server/temp/*
+!/server/temp/.gitkeep
