@@ -8,6 +8,7 @@ const db = require('~/helpers/tempDatabase');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 const TEMP_DIR = path.join(__dirname, '../temp');
+const THUMBNAIL_SIZE = '356x200';
 
 function getVideoThumbnail(id) {
   return new Promise((resolve) => {
@@ -22,10 +23,10 @@ function getVideoThumbnail(id) {
 
     let path = `${VIDEOS_DIR}/${video.name}.${video.type}`;
 
-    return ffmpeg(path)
+    ffmpeg(path)
       .screenshots({
         timestamps: ['50%'],
-        size: '356x200',
+        size: THUMBNAIL_SIZE,
         folder: TEMP_DIR,
         filename: `/${id}.png`
       }).on('error', () => {
@@ -35,7 +36,13 @@ function getVideoThumbnail(id) {
         });
       }).on('end', () => {
         fs.readFileAsync(`${TEMP_DIR}/${id}.png`)
-          .then((img) => resolve(img));
+          .then((data) => {
+            resolve({
+              img: data,
+              contentType: 'image/png',
+              size: THUMBNAIL_SIZE
+            });
+          });
       });
   });
 }

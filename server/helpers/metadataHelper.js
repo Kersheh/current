@@ -15,16 +15,17 @@ function getMetadata(id) {
       });
     }
 
+    // TODO: Build thumbnails on server start and store in db instead of
+    // building thumbnails every metadata request
     ffmpegHelper.getVideoThumbnail(id)
-      .then((data) => {
-        _.assign(metadata, {
-          thumbnail: {
-            img: data,
-            contentType: 'image/png'
-          }
-        });
+      .then((thumbnail) => {
+        _.assign(metadata, thumbnail);
         resolve(metadata);
-      });
+      })
+      .catch(() => {
+        _.assign(metadata, { thumbnail: null });
+        resolve(metadata);
+      })
   });
 }
 
