@@ -19,7 +19,7 @@ function getMetadata(id) {
     // building thumbnails every metadata request
     ffmpegHelper.getVideoThumbnail(id)
       .then((thumbnail) => {
-        _.assign(metadata, thumbnail);
+        _.assign(metadata, { thumbnail: thumbnail });
         resolve(metadata);
       })
       .catch(() => {
