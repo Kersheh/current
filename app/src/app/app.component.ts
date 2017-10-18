@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'current';
-  show_video: boolean = false;
-  show_list: boolean = true;
 }

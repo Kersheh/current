@@ -1,3 +1,6 @@
-<video width="800" [src]="video_url" controls *ngIf="video_url">
-    Your browser does not support HTML5 video.
+<div class="video-container" *ngIf="video_url">
+<video width="800" [src]="video_url" controls>
+    your browser does not support HTML5 video
 </video>
+<button (click)="close()">close</button>
+</div>

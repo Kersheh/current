@@ -10,7 +10,11 @@ export class VideoComponent {
   video_url: string;
   constructor(private _videoService: VideoService) {
     _videoService.getVideo().subscribe((video) => {
-      this.video_url = video.url;
+      if (video && video.url) {
+        this.video_url = video.url;
+      } else {
+        this.video_url = null;
+      }
     });
   }
 
