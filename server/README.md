@@ -1,10 +1,9 @@
 # Current Backend
 
 ## Development server
-
-Run `gulp dev`.
+Run `npm start`.
 
 ## Prerequisites
 
-####ffmpeg and ffprobe
+#### ffmpeg and ffprobe
 fluent-ffmpeg requires ffmpeg >= 0.9 to work.

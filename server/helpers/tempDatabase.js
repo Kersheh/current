@@ -1,7 +1,5 @@
-let db = {
-  videos: []
-};
+let videos = [];
 
 module.exports = {
-  db
+  videos
 };

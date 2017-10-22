@@ -1,10 +1,9 @@
-const _ = require('lodash');
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const ErrorHelper = require('~/helpers/errorHelper');
-const db = require('~/helpers/tempDatabase');
+const db = require('~/helpers/databaseHelper');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 const TEMP_DIR = path.join(__dirname, '../temp');
@@ -12,41 +11,57 @@ const THUMBNAIL_SIZE = '356x200';
 
 function getVideoThumbnail(id) {
   return new Promise((resolve) => {
-    let video = _.find(db.videos, (video) => { return video.id === id; });
+    return db.getVideo(id)
+      .then((video) => {
+        let path = `${VIDEOS_DIR}/${video.name}.${video.type}`;
 
-    if(_.isUndefined(video)) {
-      throw new ErrorHelper({
-        message: `Request for video id '${id}' not found`,
-        status: 404
-      });
-    }
-
-    let path = `${VIDEOS_DIR}/${video.name}.${video.type}`;
-
-    ffmpeg(path)
-      .screenshots({
-        timestamps: ['50%'],
-        size: THUMBNAIL_SIZE,
-        folder: TEMP_DIR,
-        filename: `/${id}.png`
-      }).on('error', () => {
-        throw new ErrorHelper({
-          message: `Failed to capture screenshot of file ${video.name}.${video.type}`,
-          status: 500
-        });
-      }).on('end', () => {
-        fs.readFileAsync(`${TEMP_DIR}/${id}.png`)
-          .then((data) => {
-            resolve({
-              img: data,
-              contentType: 'image/png',
-              size: THUMBNAIL_SIZE
+        ffmpeg(path)
+          .screenshots({
+            timestamps: ['50%'],
+            size: THUMBNAIL_SIZE,
+            folder: TEMP_DIR,
+            filename: `/${id}.png`
+          }).on('error', () => {
+            throw new ErrorHelper({
+              message: `Failed to capture screenshot of file ${video.name}.${video.type}`,
+              status: 500
             });
+          }).on('end', () => {
+            fs.readFileAsync(`${TEMP_DIR}/${id}.png`)
+              .then((data) => {
+                resolve({
+                  img: data,
+                  contentType: 'image/png',
+                  size: THUMBNAIL_SIZE
+                });
+              });
           });
       });
   });
 }
 
+function getVideoMetadata(id) {
+  return db.getVideo(id)
+    .then((video) => {
+      let path = `${VIDEOS_DIR}/${video.name}.${video.type}`;
+
+      return Promise.promisify(ffmpeg.ffprobe)(path)
+        .then((data) => _createMetadata(data))
+        .catch(() => {
+          throw new ErrorHelper({
+            message: `Failed to read file ${path}`,
+            status: 500
+          });
+        });
+    });
+}
+
+function _createMetadata(data) {
+  // console.log(data);
+  return data;
+}
+
 module.exports = {
-  getVideoThumbnail
+  getVideoThumbnail,
+  getVideoMetadata
 };

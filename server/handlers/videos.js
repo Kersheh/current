@@ -1,15 +1,16 @@
 const _ = require('lodash');
 const router = require('express').Router();
-const fileHelper = require('~/helpers/fileHelper');
+const db = require('~/helpers/databaseHelper');
 
 router.get('/', (req, res) => {
-  let videos = fileHelper.getListOfVideos();
-  let status;
+  const videosList = db.getVideos();
+  let videos, status;
 
-  if(_.isNull(videos)) {
+  if(_.isNull(videosList)) {
     videos = [];
     status = 500;
   } else {
+    videos = _.map(videosList, (video) => _.pick(video, ['id', 'name', 'type']));
     status = videos.length > 0 ? 200 : 204;
   }
 
