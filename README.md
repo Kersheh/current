@@ -11,7 +11,7 @@ https://github.com/Kersheh/current
 `cd` to /app. Run `npm start`.
 
 ## Development backend server
-`cd` to /server. Run `gulp dev`.
+`cd` to /server. Run `npm start`.
 
 ## Frontend colour pallet
 https://coolors.co/30c5ff-2a2d34-5c946e-dce0d9-020202

@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const routes = require('~/handlers');
 const SocketManager = require('~/helpers/socketManager');
+const config = require('~/helpers/config');
 
 const app = express();
 const server = http.createServer(app);
@@ -21,6 +22,12 @@ sockets.io.on('connect', (socket) => {
   console.log('socket connected');
 });
 
-server.listen(3000, () => {
-  console.log('Server running on 3000');
-});
+config.syncDatabase()
+  .then(() => {
+    server.listen(3000, () => {
+      console.log('Server running on 3000');
+    });
+  })
+  .catch(() => {
+    console.log('\x1b[31m', 'SEVERE ERROR: Server restart required.');
+  });

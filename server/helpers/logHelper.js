@@ -9,9 +9,9 @@ function _writeLog(log) {
   const date = moment().format('YYYY-MM-DD');
   const time = moment().format('h:mm:ss a');
   const level = log.level ? 'ERROR' : 'WARN';
-  const message = `[${time}] ${level} Status: ${log.status} | Message: ${log.message}\n`;
+  const message = `[${time}] ${level} Status: ${log.status} | Message: ${log.message}`;
 
-  fs.appendFileAsync(`${LOG_DIR}/${date}.log`, message);
+  fs.appendFileAsync(`${LOG_DIR}/${date}.log`, `${message}\n`);
   const color = log.level ? '\x1b[31m' : '\x1b[33m';
   console.log(color, message);
 }
