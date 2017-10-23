@@ -17,7 +17,7 @@ function getVideoThumbnail(id) {
 
         ffmpeg(filePath)
           .screenshots({
-            timestamps: ['50%'],
+            timestamps: ['10%'],
             size: THUMBNAIL_SIZE,
             folder: TEMP_DIR,
             filename: `/${id}.png`
