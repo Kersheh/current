@@ -20,7 +20,7 @@ function getVideoThumbnail(id) {
             timestamps: ['10%'],
             size: THUMBNAIL_SIZE,
             folder: TEMP_DIR,
-            filename: `/${id}.png`
+            filename: `${id}.png`
           }).on('error', () => {
             throw new ErrorHelper({
               message: `Failed to capture screenshot of file ${video.name}.${video.type}`,
