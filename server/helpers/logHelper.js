@@ -10,8 +10,9 @@ function _writeLog(log) {
   const time = moment().format('h:mm:ss a');
   const level = log.level ? 'ERROR' : 'WARN';
   const message = `[${time}] ${level} Status: ${log.status} | Message: ${log.message}`;
+  const filePath = path.join(LOG_DIR, `${date}.log`);
 
-  fs.appendFileAsync(`${LOG_DIR}/${date}.log`, `${message}\n`);
+  fs.appendFileAsync(filePath, `${message}\n`);
   const color = log.level ? '\x1b[31m' : '\x1b[33m';
   console.log(color, message);
 }
