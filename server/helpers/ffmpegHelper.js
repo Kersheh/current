@@ -13,9 +13,9 @@ function getVideoThumbnail(id) {
   return new Promise((resolve) => {
     return db.getVideo(id)
       .then((video) => {
-        let path = `${VIDEOS_DIR}/${video.name}.${video.type}`;
+        let filePath = path.join(VIDEOS_DIR, `${video.name}.${video.type}`);
 
-        ffmpeg(path)
+        ffmpeg(filePath)
           .screenshots({
             timestamps: ['50%'],
             size: THUMBNAIL_SIZE,
@@ -27,7 +27,7 @@ function getVideoThumbnail(id) {
               status: 500
             });
           }).on('end', () => {
-            fs.readFileAsync(`${TEMP_DIR}/${id}.png`)
+            fs.readFileAsync(path.join(TEMP_DIR, `${id}.png`))
               .then((data) => {
                 resolve({
                   img: data,
@@ -43,21 +43,21 @@ function getVideoThumbnail(id) {
 function getVideoMetadata(id) {
   return db.getVideo(id)
     .then((video) => {
-      let path = `${VIDEOS_DIR}/${video.name}.${video.type}`;
+      let filePath = path.join(VIDEOS_DIR, `${video.name}.${video.type}`);
 
-      return Promise.promisify(ffmpeg.ffprobe)(path)
+      return Promise.promisify(ffmpeg.ffprobe)(filePath)
         .then((data) => _createMetadata(data))
         .catch(() => {
           throw new ErrorHelper({
-            message: `Failed to read file ${path}`,
+            message: `Failed to read file ${filePath}`,
             status: 500
           });
         });
     });
 }
 
+// TODO: Structure metadata object
 function _createMetadata(data) {
-  // console.log(data);
   return data;
 }
 

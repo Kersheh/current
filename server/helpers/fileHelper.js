@@ -40,7 +40,7 @@ function streamVideo(id, range = 0) {
       });
     }
 
-    filePath = `${VIDEOS_DIR}/${video.name}.${video.type}`;
+    filePath = path.join(VIDEOS_DIR, `${video.name}.${video.type}`);
     resolve();
   }).then(() => fs.statAsync(filePath))
     .catch((err) => {
