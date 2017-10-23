@@ -1,7 +1,8 @@
 const db = require('~/helpers/databaseHelper');
 
 function socket(io) {
-  io.namespace('metadata').on('connect', (socket) => {
+  const namespace = io.namespace('metadata');
+  namespace.on('connect', (socket) => {
     socket.on('getMetadata', (id) => {
       db.getVideo(id)
         .then((metadata) => socket.emit('data', metadata))

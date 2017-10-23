@@ -1,0 +1,17 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:3000/socket/player');
+
+  socket.emit('changeVideo', 'd87f7e0c');
+  socket.emit('changeTime', 100);
+  socket.emit('pause');
+  socket.emit('play');
+
+  socket.on('playerUpdate', function (player) {
+    console.log(player); // contains properties id, timestamp, playing
+  });
+  socket.on('err', function (err) {
+    console.log(err);
+  });
+
+</script>

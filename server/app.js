@@ -22,7 +22,7 @@ sockets.io.on('connect', (socket) => {
   console.log('socket connected');
 });
 
-config.syncDatabase()
+config.syncVideoLibrary()
   .then(() => {
     server.listen(3000, () => {
       console.log('Server running on 3000');
