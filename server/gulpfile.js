@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 const eslint = require('gulp-eslint');
 const clean = require('gulp-clean');
+const prompt = require('gulp-prompt');
 const spawn = require('child_process').spawn;
 
 const DB_PATH = 'data';
@@ -55,6 +56,7 @@ gulp.task('clean-db', () => {
     '!data/.gitkeep',
     'data/*'
   ], {read: false})
+    .pipe(prompt.confirm('Are you sure you want to delete the database contents?'))
     .pipe(clean({force: true}));
 });
 
