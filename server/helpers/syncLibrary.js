@@ -9,9 +9,10 @@ const db = require('~/helpers/databaseHelper');
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 
 /*
- * Synchronize video library and watcher with database; to be executed on server
- * start up
+ * Synchronize video library and watcher with database;
+ * to be executed on server start up.
  */
+
 function syncVideoLibrary() {
   return fileHelper.readVideoFiles()
     .then((videos) => {
