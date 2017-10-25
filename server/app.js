@@ -1,13 +1,16 @@
 const express = require('express');
 const http = require('http');
+const config = require('config');
 const routes = require('~/handlers');
 const SocketManager = require('~/helpers/socketManager');
-const databaseClient = require('~/helpers/databaseHelper');
+const db = require('~/helpers/databaseClient');
 const syncLibrary = require('~/helpers/syncLibrary');
 
 const app = express();
 const server = http.createServer(app);
 const sockets = new SocketManager(server);
+
+const PORT = config.get('Server.port');
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -21,8 +24,8 @@ app.use('/videos', routes.videos);
 
 syncLibrary.syncVideoLibrary()
   .then(() => {
-    server.listen(3000, () => {
-      console.log('Server running on 3000');
+    server.listen(PORT, () => {
+      console.log(`Server running on ${PORT}`);
     });
   })
   .catch(() => {
@@ -34,9 +37,9 @@ sockets.io.on('connect', (socket) => {
 });
 
 process.on('SIGINT', () => {
-  console.log('\nserver shutting down...');
-  return databaseClient.mongoPromise.then((db) => {
-    console.log('database shutting down...');
+  console.log('\nServer shutting down...');
+  return db.mongoPromise.then((db) => {
+    console.log('Database shutting down...');
     return db.close();
   });
 });

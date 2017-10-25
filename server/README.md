@@ -9,4 +9,4 @@ Run `npm start`.
 fluent-ffmpeg requires ffmpeg >= 0.9 to work.
 
 #### MongoDB
-Database path `DB_PATH` set in `gulpfile.js`
+Database path `DB_PATH` set in `config/default.json`

@@ -4,8 +4,9 @@ const eslint = require('gulp-eslint');
 const clean = require('gulp-clean');
 const prompt = require('gulp-prompt');
 const spawn = require('child_process').spawn;
+const config = require('config');
 
-const DB_PATH = 'data';
+const DB_PATH = config.get('Database.path');
 
 gulp.task('lint', () => {
   gulp.src('./**/*.js')

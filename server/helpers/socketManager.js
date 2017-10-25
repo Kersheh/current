@@ -2,6 +2,7 @@ const _ = require('lodash');
 const socketIO = require('socket.io');
 const sockets = require('~/helpers/sockets');
 
+// TODO: Singleton client
 class SocketManager {
   constructor(server) {
     this.io = socketIO(server);

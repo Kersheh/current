@@ -1,4 +1,4 @@
-const db = require('~/helpers/databaseHelper');
+const db = require('~/helpers/databaseClient');
 
 function socket(io) {
   const namespace = io.namespace('metadata');

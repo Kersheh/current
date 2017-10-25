@@ -4,7 +4,7 @@ const watch = require('node-watch');
 const Promise = require('bluebird');
 const fileHelper = require('~/helpers/fileHelper');
 const ffmpegHelper = require('~/helpers/ffmpegHelper');
-const db = require('~/helpers/databaseHelper');
+const db = require('~/helpers/databaseClient');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 

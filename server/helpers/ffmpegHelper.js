@@ -3,7 +3,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const ErrorHelper = require('~/helpers/errorHelper');
-const db = require('~/helpers/databaseHelper');
+const db = require('~/helpers/databaseClient');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 const TEMP_DIR = path.join(__dirname, '../temp');

@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const router = require('express').Router();
-const db = require('~/helpers/databaseHelper');
+const db = require('~/helpers/databaseClient');
 
 router.get('/', (req, res) => {
   const videosList = db.getVideos();
