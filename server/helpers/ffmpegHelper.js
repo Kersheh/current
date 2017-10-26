@@ -46,7 +46,7 @@ function getVideoMetadata(id) {
       let filePath = path.join(VIDEOS_DIR, `${video.name}.${video.type}`);
 
       return Promise.promisify(ffmpeg.ffprobe)(filePath)
-        .then((data) => _createMetadata(data))
+        .then((data) => _transformMetadata(data))
         .catch(() => {
           throw new ErrorHelper({
             message: `Failed to read file ${filePath}`,
@@ -57,7 +57,7 @@ function getVideoMetadata(id) {
 }
 
 // TODO: Structure metadata object
-function _createMetadata(data) {
+function _transformMetadata(data) {
   return data;
 }
 

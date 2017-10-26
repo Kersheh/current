@@ -1,19 +1,23 @@
 const _ = require('lodash');
 const config = require('config');
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const ErrorHelper = require('~/helpers/errorHelper');
-const db = require('~/helpers/tempDatabase');
+const db = require('~/helpers/tempDatabase'); // TODO: Remove temp database
 
 const DB_URL = config.get('Database.url');
+mongoose.Promise = Promise;
 
 class DatabaseClient {
   constructor(url) {
-    this.mongoPromise = this.connect(url);
+    this.mongoPromise = this.connect(url)
+      .catch(() => {
+        console.log('\x1b[31m', 'SEVERE ERROR: Server restart required.');
+      });
   }
 
   connect(url) {
-    return MongoClient.connect(url)
+    return mongoose.connect(url, { useMongoClient: true })
       .catch(() => {
         throw new ErrorHelper({
           message: `Failed to connect database to ${url}.`,
