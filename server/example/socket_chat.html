@@ -1,0 +1,14 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:3000/socket/chat');
+
+  socket.on('message', function (data) {
+    console.log(data);
+  });
+  socket.on('err', function (err) {
+    console.log(err);
+  });
+
+  socket.emit('message', 'test');
+
+</script>
