@@ -1,7 +1,7 @@
-const router = require('express').Router();
+const handler = require('express').Router();
 const fileHelper = require('~/helpers/fileHelper');
 
-router.get('/:id', (req, res) => {
+handler.get('/:id', (req, res) => {
   const id = req.params.id;
   const range = req.headers.range;
 
@@ -14,4 +14,4 @@ router.get('/:id', (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = handler;

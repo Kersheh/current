@@ -26,6 +26,10 @@ class DatabaseClient {
       });
   }
 
+  /*
+   * Video database calls
+   */
+
   createVideo(id, video) {
     return models.Video.create(video).catch(() => {}); // silence duplicate key error
   }
@@ -53,6 +57,10 @@ class DatabaseClient {
   getVideos(videos) {
     return models.Video.find({}, '-_id id name type');
   }
+
+  /*
+   * User database calls
+   */
 }
 
 module.exports = new DatabaseClient(DB_URL);
