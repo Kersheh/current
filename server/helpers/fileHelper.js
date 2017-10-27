@@ -29,57 +29,58 @@ function readVideoFiles() {
 }
 
 function streamVideo(id, range = 0) {
-  let video = _.find(db.getVideos(), (video) => { return video.id === id; });
-  let filePath;
+  return db.getVideo(id).then((video) => {
+    let filePath;
 
-  return new Promise((resolve) => {
-    if(_.isUndefined(video)) {
-      throw new ErrorHelper({
-        message: `Request for video id '${id}' not found`,
-        status: 404
-      });
-    }
-
-    filePath = path.join(VIDEOS_DIR, `${video.name}.${video.type}`);
-    resolve();
-  }).then(() => fs.statAsync(filePath))
-    .catch((err) => {
-      if(_.isUndefined(err.status)) {
+    return new Promise((resolve) => {
+      if(_.isUndefined(video)) {
         throw new ErrorHelper({
-          message: `Video id '${id}' exists but file not found!`,
-          status: 500,
-          level: 1
+          message: `Request for video id '${id}' not found`,
+          status: 404
         });
       }
-    }).then((stat) => {
-      let stream, head, status;
-      const fileSize = stat.size;
 
-      if(range) {
-        const parts = range.replace(/bytes=/, '').split('-');
-        const start = parseInt(parts[0], 10);
-        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-        const chunkSize = (end - start) + 1;
+      filePath = path.join(VIDEOS_DIR, `${video.name}.${video.type}`);
+      resolve();
+    }).then(() => fs.statAsync(filePath))
+      .catch((err) => {
+        if(_.isUndefined(err.status)) {
+          throw new ErrorHelper({
+            message: `Video id '${id}' exists but file not found!`,
+            status: 500,
+            level: 1
+          });
+        }
+      }).then((stat) => {
+        let stream, head, status;
+        const fileSize = stat.size;
 
-        head = {
-          'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-          'Accept-Ranges': 'bytes',
-          'Content-Length': chunkSize,
-          'Content-Type': `video/${video.type}`
-        };
-        stream = fs.createReadStream(filePath, { start, end });
-        status = 206;
-      } else {
-        head = {
-          'Content-Length': fileSize,
-          'Content-Type': `video/${video.type}`
-        };
-        stream = fs.createReadStream(filePath);
-        status = 200;
-      }
+        if(range) {
+          const parts = range.replace(/bytes=/, '').split('-');
+          const start = parseInt(parts[0], 10);
+          const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+          const chunkSize = (end - start) + 1;
 
-      return({ head, stream, status });
-    });
+          head = {
+            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+            'Accept-Ranges': 'bytes',
+            'Content-Length': chunkSize,
+            'Content-Type': `video/${video.type}`
+          };
+          stream = fs.createReadStream(filePath, { start, end });
+          status = 206;
+        } else {
+          head = {
+            'Content-Length': fileSize,
+            'Content-Type': `video/${video.type}`
+          };
+          stream = fs.createReadStream(filePath);
+          status = 200;
+        }
+
+        return({ head, stream, status });
+      });
+  });
 }
 
 function hashFileName(name) {

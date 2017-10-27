@@ -6,7 +6,7 @@ const prompt = require('gulp-prompt');
 const spawn = require('child_process').spawn;
 const config = require('config');
 
-const DB_PATH = config.get('Database.path');
+const DB_PATH = config.get('DATABASE.PATH');
 
 gulp.task('lint', () => {
   gulp.src('./**/*.js')

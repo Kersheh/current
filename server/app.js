@@ -10,7 +10,7 @@ const app = express();
 const server = http.createServer(app);
 const sockets = new SocketManager(server);
 
-const PORT = config.get('Server.port');
+const PORT = config.get('SERVER.PORT');
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -33,7 +33,7 @@ syncLibrary.syncVideoLibrary()
   });
 
 sockets.io.on('connect', (socket) => {
-  console.log('socket connected')
+  // console.log('socket connected');
 });
 
 process.on('SIGINT', () => {

@@ -1,11 +1,10 @@
-const _ = require('lodash');
 const config = require('config');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const ErrorHelper = require('~/helpers/errorHelper');
-const db = require('~/helpers/tempDatabase'); // TODO: Remove temp database
+const models = require('~/models');
 
-const DB_URL = config.get('Database.url');
+const DB_URL = config.get('DATABASE.URL');
 mongoose.Promise = Promise;
 
 class DatabaseClient {
@@ -27,44 +26,32 @@ class DatabaseClient {
       });
   }
 
-  // TODO: Implement with Mongo
   createVideo(id, video) {
-    if(!_.find(db.videos, (video) => { return video.id === id; })) {
-      db.videos.push(video);
-    }
+    return models.Video.create(video).catch(() => {}); // silence duplicate key error
   }
 
-  // TODO: Implement with Mongo
   getVideo(id) {
-    return new Promise((resolve) => {
-      let video = _.find(db.videos, (video) => { return video.id === id; });
-
-      if(_.isUndefined(video)) {
-        throw new ErrorHelper({
-          message: `Request for video id '${id}' not found`,
-          status: 404
-        });
-      }
-      resolve(video);
-    });
+    return models.Video.findOne({ 'id': id }, '-_id id name type');
   }
 
-  // TODO: Implement with Mongo
-  updateVideo(id, prop) {
-    const video = _.find(db.videos, (video) => { return video.id === id; });
-    if(video) {
-      _.extend(video, prop);
-    }
+  getVideoAllData(id) {
+    return models.Video.findOne({ 'id': id }, '-_id id name type metadata thumbnail');
   }
 
-  // TODO: Implement with Mongo
+  updateVideoMetadata(id, metadata) {
+    return models.Video.update({ 'id': id }, { 'metadata': metadata });
+  }
+
+  updateVideoThumbnail(id, thumbnail) {
+    return models.Video.update({ 'id': id }, { 'thumbnail': thumbnail });
+  }
+
   removeVideo(id) {
-    _.remove(db.videos, (video) => { return video.id === id; });
+    return models.Video.remove({ 'id': id }).catch(() => {}); // silence failed remove error
   }
 
-  // TODO: Implement with Mongo
   getVideos(videos) {
-    return db.videos;
+    return models.Video.find({}, '-_id id name type');
   }
 }
 

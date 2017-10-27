@@ -1,9 +1,9 @@
 {
-  "Server" : {
-    "port": 3000
+  "SERVER" : {
+    "PORT": 3000
   },
-  "Database": {
-    "url": "mongodb://localhost:27017/current",
-    "path": "data"
+  "DATABASE": {
+    "URL": "mongodb://localhost:27017/current",
+    "PATH": "data"
   }
 }
