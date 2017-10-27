@@ -30,7 +30,7 @@ class DatabaseClient {
    * Video database calls
    */
 
-  createVideo(id, video) {
+  createVideo(video) {
     return models.Video.create(video).catch(() => {}); // silence duplicate key error
   }
 
@@ -54,13 +54,17 @@ class DatabaseClient {
     return models.Video.remove({ 'id': id }).catch(() => {}); // silence failed remove error
   }
 
-  getVideos(videos) {
+  getVideos() {
     return models.Video.find({}, '-_id id name type');
   }
 
   /*
    * User database calls
    */
+
+  getUsers() {
+    return models.User.find({}, 'username admin');
+  }
 }
 
 module.exports = new DatabaseClient(DB_URL);
