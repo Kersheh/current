@@ -7,3 +7,5 @@ npm-debug.log
 /server/log
 /server/temp/*
 !/server/temp/.gitkeep
+/server/data/*
+!/server/data/.gitkeep

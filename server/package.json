@@ -1,18 +1,19 @@
 {
   "name": "current-be",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "app.js",
   "scripts": {
     "start": "gulp dev"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "config": "^1.27.0",
     "crc": "^3.5.0",
     "express": "^4.16.0",
     "fluent-ffmpeg": "^2.1.2",
-    "gulp": "^3.9.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
+    "mongoose": "^4.12.4",
     "node-watch": "^0.5.5",
     "socket.io": "^2.0.3",
     "wavy": "^1.0.4"
@@ -23,7 +24,10 @@
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-eslint": "^4.0.0",
-    "gulp-nodemon": "^2.2.1"
+    "gulp-nodemon": "^2.2.1",
+    "gulp-prompt": "^0.4.1"
   }
 }
