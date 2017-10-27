@@ -4,23 +4,38 @@ const watch = require('node-watch');
 const Promise = require('bluebird');
 const fileHelper = require('~/helpers/fileHelper');
 const ffmpegHelper = require('~/helpers/ffmpegHelper');
-const db = require('~/helpers/databaseHelper');
+const db = require('~/helpers/databaseClient');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 
 /*
- * Synchronize video library and watcher with database; to be executed on server
- * start up
+ * Synchronize video library and watcher with database;
+ * to be executed on server start up.
  */
+
 function syncVideoLibrary() {
+  let videos;
+
   return fileHelper.readVideoFiles()
-    .then((videos) => {
-      return _.each(videos, (video) => {
-        db.createVideo(video.id, video);
+    .then((videosList) => {
+      videos = videosList;
+      console.log('Building database from videos folder...');
+      // consider setting concurrency limit of Promise map
+      return Promise.map(videos, (video) => {
+        return db.createVideo(video.id, video);
       });
     }).then(() => {
-      return _.each(db.getVideos(), (video) => {
-        buildVideoInfo(video.id);
+      console.log('Cleaning database of missing videos from videos folder...');
+      return db.getVideos().then((videosList) => {
+        const videosToRemove = _.differenceBy(videosList, videos, 'id');
+        return Promise.map(videosToRemove, (video) => {
+          return db.removeVideo(video.id);
+        });
+      });
+    }).then(() => {
+      console.log('Building video metadata of videos in database...');
+      return Promise.map(videos, (video) => {
+        return buildVideoInfo(video.id);
       });
     }).then(() => {
       watch(VIDEOS_DIR, { recursive: false }, (event, name) => {
@@ -48,10 +63,8 @@ function buildVideoInfo(id) {
     ffmpegHelper.getVideoMetadata(id),
     ffmpegHelper.getVideoThumbnail(id)
   ]).spread((metadata, thumbnail) => {
-    db.updateVideo(id, {
-      metadata: metadata,
-      thumbnail: thumbnail
-    });
+    return db.updateVideoMetadata(id, metadata)
+      .then(() => db.updateVideoThumbnail(id, thumbnail));
   });
 }
 

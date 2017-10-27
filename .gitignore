@@ -2,8 +2,9 @@
 .DS_Store
 npm-debug.log
 */node_modules
+!.gitkeep
 
 # Server
 /server/log
 /server/temp/*
-!/server/temp/.gitkeep
+/server/data/*
