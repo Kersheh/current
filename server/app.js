@@ -19,6 +19,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/user', routes.user);
+app.use('/users', routes.users);
 app.use('/video', routes.video);
 app.use('/videos', routes.videos);
 

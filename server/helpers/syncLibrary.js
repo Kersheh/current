@@ -44,8 +44,8 @@ function syncVideoLibrary() {
         if(event === 'update') {
           if(fileHelper.validFileName(file)) {
             const video = fileHelper.videoModel(file);
-            db.createVideo(video.id, video);
-            buildVideoInfo(video.id);
+            db.createVideo(video.id, video)
+              .then(() => buildVideoInfo(video.id));
           }
         }
 
