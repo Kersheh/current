@@ -29,7 +29,7 @@ app.use(session({
   secret: SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 10000 }
+  cookie: { maxAge: MAX_AGE_HRS * 3600000 }
 }));
 
 app.get('*', authenticationHelper.authenticate);
