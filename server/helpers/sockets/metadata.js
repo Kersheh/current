@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const db = require('~/helpers/databaseClient');
+const db = require('~/helpers/databaseManager');
 
 function socket(io) {
   const namespace = io.namespace('metadata');
@@ -9,7 +9,7 @@ function socket(io) {
       db.getVideoAllData(id).then((metadata) => {
         if(_.isNull(metadata)) {
           socket.emit('err', {
-            msg: `Failed to fetch metadata of video id '${id}'`
+            message: `Failed to fetch metadata of video id '${id}'`
           });
         } else {
           socket.emit('data', metadata)

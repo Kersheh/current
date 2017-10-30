@@ -4,7 +4,7 @@ const watch = require('node-watch');
 const Promise = require('bluebird');
 const fileHelper = require('~/helpers/fileHelper');
 const ffmpegHelper = require('~/helpers/ffmpegHelper');
-const db = require('~/helpers/databaseClient');
+const db = require('~/helpers/databaseManager');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 
@@ -22,7 +22,7 @@ function syncVideoLibrary() {
       console.log('Building database from videos folder...');
       // consider setting concurrency limit of Promise map
       return Promise.map(videos, (video) => {
-        return db.createVideo(video.id, video);
+        return db.createVideo(video);
       });
     }).then(() => {
       console.log('Cleaning database of missing videos from videos folder...');
@@ -44,7 +44,7 @@ function syncVideoLibrary() {
         if(event === 'update') {
           if(fileHelper.validFileName(file)) {
             const video = fileHelper.videoModel(file);
-            db.createVideo(video.id, video)
+            db.createVideo(video)
               .then(() => buildVideoInfo(video.id));
           }
         }

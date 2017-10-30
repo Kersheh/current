@@ -1,11 +1,10 @@
 const _ = require('lodash');
 const handler = require('express').Router();
-const db = require('~/helpers/databaseClient');
+const db = require('~/helpers/databaseManager');
 
-handler.get('/', (req, res) => {
-  db.getVideos().then((videosList) => {
-    const videos = videosList;
-    const status = _.isEmpty(videosList) ? 204 : 200;
+handler.get('/', (req, res, next) => {
+  db.getVideos().then((videos) => {
+    const status = _.isEmpty(videos) ? 204 : 200;
 
     res.status(status).json(videos);
   });

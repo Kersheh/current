@@ -1,7 +1,8 @@
 const handler = require('express').Router();
 const fileHelper = require('~/helpers/fileHelper');
+const ErrorHelper = require('~/helpers/errorHelper');
 
-handler.get('/:id', (req, res) => {
+handler.get('/:id', (req, res, next) => {
   const id = req.params.id;
   const range = req.headers.range;
 
@@ -10,7 +11,10 @@ handler.get('/:id', (req, res) => {
       res.writeHead(video.status, video.head);
       video.stream.pipe(res);
     }).catch(() => {
-      res.status(404).send();
+      next(new ErrorHelper({
+        message: `Video id ${id} not found.`,
+        status: 404
+      }));
     });
 });
 

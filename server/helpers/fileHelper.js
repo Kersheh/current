@@ -4,7 +4,7 @@ const crc = require('crc');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const ErrorHelper = require('~/helpers/errorHelper');
-const db = require('~/helpers/databaseClient');
+const db = require('~/helpers/databaseManager');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 
