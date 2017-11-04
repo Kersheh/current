@@ -8,7 +8,6 @@
       "path": "server",
       "name": "Current Server",
       "cmd": "npm start"
-    },
-    "server"
+    }
   ]
 }

@@ -3,6 +3,14 @@ A home streaming shared synchronized video web app.
 
 ## Development
 
+### Automated Dev Deployment
+
+#### projtabs
+
+Execute [projtabs](https://www.npmjs.com/package/projtabs) on project root.
+
+### Manual Dev Deployment
+
 #### Frontend
 `cd` to /app. Run `npm start`.
 
