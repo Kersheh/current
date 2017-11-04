@@ -13,24 +13,34 @@ function authenticate(req, res, next) {
   db.getSession(sessionID)
     .then((session) => {
       if(_.isNull(session)) {
-        next(new ErrorHelper({
+        return next(new ErrorHelper({
           message: 'Access denied. Session not authenticated.',
           status: 401
         }));
-      } else {
-        const expiry = moment(session.cookie._expires);
-        if(expiry - moment() < 0) {
-          db.removeSession(session.username)
-            .then(() => {
-              next(new ErrorHelper({
-                message: 'Access denied. Session has expired.',
-                status: 401
-              }));
-            });
-        } else {
-          next();
-        }
+      } else if(_isExpired(moment(session.cookie._expires))) {
+        return db.removeSession(session.sessionID)
+          .then(() => {
+            next(new ErrorHelper({
+              message: 'Access denied. Session has expired.',
+              status: 401
+            }));
+          });
       }
+
+      return db.updateSession(sessionID, req.session.cookie)
+        .then(() => {
+          // expire old sessions
+          return db.getSessionsByUsername(session.username)
+            .then((sessions) => {
+              return _.each(sessions, (session) => {
+                if(sessionID !== session.sessionID) {
+                  if(_isExpired(moment(session.cookie._expires))) {
+                    db.removeSession(session.sessionID);
+                  }
+                }
+              });
+            });
+        }).then(() => next());
     });
 }
 
@@ -49,6 +59,10 @@ function comparePassword(input, username) {
       }
       return bcrypt.compare(input, user.password);
     });
+}
+
+function _isExpired(expiry) {
+  return expiry - moment() < 0;
 }
 
 module.exports = {

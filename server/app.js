@@ -27,8 +27,9 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(session({
   secret: SECRET,
-  resave: false,
   saveUninitialized: true,
+  resave: true,
+  rolling: true,
   cookie: { maxAge: MAX_AGE_HRS * 3600000 }
 }));
 

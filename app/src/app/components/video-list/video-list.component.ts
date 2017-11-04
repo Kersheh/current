@@ -9,7 +9,7 @@ import { VideoService } from '../../shared/video.service';
 export class VideoListComponent {
   title = 'current';
   videos: Array<any>;
-  hide: boolean = false;
+  hide;
 
   constructor(private _videoService: VideoService) {
     this.load();

@@ -113,14 +113,14 @@ class DatabaseManager {
       });
   }
 
-  removeSession(username) {
-    return models.Session.findOne({ 'username': username })
+  removeSession(sessionID) {
+    return models.Session.findOne({ 'sessionID': sessionID })
       .then((session) => {
         if(!_.isNull(session)) {
           return session.remove();
         } else {
           throw new ErrorHelper({
-            message: `Session for user ${username} not found.`,
+            message: `Session for ${sessionID} not found.`,
             status: 404
           })
         }
@@ -129,6 +129,14 @@ class DatabaseManager {
 
   getSession(sessionID) {
     return models.Session.findOne({ 'sessionID': sessionID });
+  }
+
+  getSessionsByUsername(username) {
+    return models.Session.find({ 'username': username });
+  }
+
+  updateSession(sessionID, cookie) {
+    return models.Session.update({ 'sessionID': sessionID }, { 'cookie': cookie });
   }
 }
 
