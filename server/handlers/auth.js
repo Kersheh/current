@@ -37,24 +37,27 @@ handler.post('/login', (req, res, next) => {
 });
 
 handler.post('/logout', (req, res, next) => {
-  const user = req.body.user;
+  const sessionID = req.sessionID;
 
-  if(_.isNil(user) || _.isNil(user.username)) {
-    next(new ErrorHelper({
-      message: 'Username not given.',
-      status: 401
-    }));
-  } else {
-    db.removeSession(user.username)
-      .then(() => {
-        res.status(200).send();
-      }).catch((err) => {
-        next(new ErrorHelper({
-          message: err.message,
-          status: err.status
-        }));
-      });
-  }
+  db.removeSession(sessionID)
+    .then(() => {
+      res.status(200).send();
+    }).catch((err) => {
+      next(new ErrorHelper({
+        message: err.message,
+        status: err.status
+      }));
+    });
+});
+
+handler.get('/', (req, res, next) => {
+  db.getSessions()
+    .then((sessions) => res.send(sessions));
+});
+
+handler.get('/remove', (req, res, next) => {
+  db.removeSessions()
+    .then(() => res.send());
 });
 
 module.exports = handler;

@@ -14,7 +14,7 @@ export class VideoService {
   }
 
   getVideoList() {
-    return this.http.get('http://127.0.0.1:3000/videos')
+    return this.http.get('http://127.0.0.1:3000/videos', { withCredentials: true })
       .map((res: Response) => res.json());
   }
 

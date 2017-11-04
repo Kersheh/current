@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const config = require('config');
@@ -17,12 +18,12 @@ const PORT = config.get('SERVER.PORT');
 const SECRET = config.get('SESSION.SECRET');
 const MAX_AGE_HRS = config.get('SESSION.MAX_AGE_HRS');
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  next();
-});
+app.use(cors({
+  origin: 'http://localhost:4200',
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  methods: ['POST', 'GET', 'OPTIONS'],
+  credentials: true
+}));
 
 app.use(bodyParser.json());
 app.use(session({
