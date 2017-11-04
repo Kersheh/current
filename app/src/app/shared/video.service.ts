@@ -15,18 +15,18 @@ export class VideoService {
 
   getVideoList() {
     return this.http.get('http://127.0.0.1:3000/videos')
-    .map((res:Response) => res.json());
+      .map((res: Response) => res.json());
   }
 
   setVideo(id: string) {
-      this.video.next({ url: 'http://127.0.0.1:3000/video/' + id });
+    this.video.next({ url: 'http://127.0.0.1:3000/video/' + id });
   }
 
   clearVideo() {
-      this.video.next();
+    this.video.next();
   }
 
   getVideo(): Observable<any> {
-      return this.video.asObservable();
+    return this.video.asObservable();
   }
 }
