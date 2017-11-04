@@ -50,14 +50,4 @@ handler.post('/logout', (req, res, next) => {
     });
 });
 
-handler.get('/', (req, res, next) => {
-  db.getSessions()
-    .then((sessions) => res.send(sessions));
-});
-
-handler.get('/remove', (req, res, next) => {
-  db.removeSessions()
-    .then(() => res.send());
-});
-
 module.exports = handler;

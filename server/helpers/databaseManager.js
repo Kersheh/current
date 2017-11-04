@@ -138,14 +138,6 @@ class DatabaseManager {
   updateSession(sessionID, cookie) {
     return models.Session.update({ 'sessionID': sessionID }, { 'cookie': cookie });
   }
-
-  getSessions() {
-    return models.Session.find({});
-  }
-
-  removeSessions() {
-    return models.Session.remove({});
-  }
 }
 
 module.exports = new DatabaseManager(DB_URL);
