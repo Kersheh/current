@@ -18,7 +18,7 @@ export class LoginService {
       }
     };
 
-    return this.http.post('http://127.0.0.1:3000/auth/login', <JSON>this.body)
+    return this.http.post('http://127.0.0.1:3000/auth/login', <JSON>this.body, { withCredentials: true })
       .map((res: Response) => console.log(res));
   }
 
