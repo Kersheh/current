@@ -6,7 +6,6 @@ const ErrorHelper = require('~/helpers/errorHelper');
 
 handler.post('/login', (req, res, next) => {
   const user = req.body.user;
-  req.session.touch();
 
   if(_.isNil(user) || _.isNil(user.username) || _.isNil(user.password)) {
     next(new ErrorHelper({

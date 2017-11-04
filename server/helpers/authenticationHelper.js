@@ -12,11 +12,19 @@ function authenticate(req, res, next) {
 
   db.getSession(sessionID)
     .then((session) => {
-      if(_.isNull(session) || _isExpired(moment(session.cookie._expires))) {
+      if(_.isNull(session)) {
         return next(new ErrorHelper({
           message: 'Access denied. Session not authenticated.',
           status: 401
         }));
+      } else if(_isExpired(moment(session.cookie._expires))) {
+        return db.removeSession(session.sessionID)
+          .then(() => {
+            next(new ErrorHelper({
+              message: 'Access denied. Session has expired.',
+              status: 401
+            }));
+          });
       }
 
       return db.updateSession(sessionID, req.session.cookie)
