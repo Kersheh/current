@@ -11,7 +11,9 @@ export class VideoListComponent {
   videos: Array<any>;
   hide;
 
-  constructor(private _videoService: VideoService) {
+  constructor(
+    private _videoService: VideoService
+  ) {
     this.load();
 
     this._videoService.getVideo().subscribe((video) => {

@@ -41,6 +41,7 @@ handler.post('/logout', (req, res, next) => {
 
   db.removeSession(sessionID)
     .then(() => {
+      req.session.destroy();
       res.status(200).send();
     }).catch((err) => {
       next(new ErrorHelper({
