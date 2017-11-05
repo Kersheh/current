@@ -1,9 +1,9 @@
 const _ = require('lodash');
 const moment = require('moment');
 const Promise = require('bluebird');
-const bcrypt = Promise.promisifyAll(require('bcrypt'));
-const db = require('~/helpers/databaseManager');
-const ErrorHelper = require('~/helpers/errorHelper');
+const bcrypt = Promise.promisifyAll(require('bcryptjs'));
+const db = require('./databaseManager');
+const ErrorHelper = require('./errorHelper');
 
 const SALT_ROUNDS = 10;
 

@@ -1,8 +1,8 @@
-const auth = require('~/handlers/auth');
-const user = require('~/handlers/user');
-const users = require('~/handlers/users');
-const video = require('~/handlers/video');
-const videos = require('~/handlers/videos');
+const auth = require('./auth');
+const user = require('./user');
+const users = require('./users');
+const video = require('./video');
+const videos = require('./videos');
 
 module.exports = {
   auth,

@@ -1,6 +1,6 @@
 const handler = require('express').Router();
-const fileHelper = require('~/helpers/fileHelper');
-const ErrorHelper = require('~/helpers/errorHelper');
+const fileHelper = require('../helpers/fileHelper');
+const ErrorHelper = require('../helpers/errorHelper');
 
 handler.get('/:id', (req, res, next) => {
   const id = req.params.id;

@@ -1,8 +1,8 @@
 const handler = require('express').Router();
 const _ = require('lodash');
-const db = require('~/helpers/databaseManager');
-const authenticationHelper = require('~/helpers/authenticationHelper');
-const ErrorHelper = require('~/helpers/errorHelper');
+const db = require('../helpers/databaseManager');
+const authenticationHelper = require('../helpers/authenticationHelper');
+const ErrorHelper = require('../helpers/errorHelper');
 
 handler.get('/:username', (req, res, next) => {
   const username = req.params.username;

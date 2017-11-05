@@ -1,6 +1,6 @@
-const Session = require('~/models/session');
-const User = require('~/models/user');
-const Video = require('~/models/video');
+const Session = require('./session');
+const User = require('./user');
+const Video = require('./video');
 
 module.exports = {
   Session,

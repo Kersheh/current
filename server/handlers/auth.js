@@ -1,8 +1,8 @@
 const _ = require('lodash');
 const handler = require('express').Router();
-const db = require('~/helpers/databaseManager');
-const authenticationHelper = require('~/helpers/authenticationHelper');
-const ErrorHelper = require('~/helpers/errorHelper');
+const db = require('../helpers/databaseManager');
+const authenticationHelper = require('../helpers/authenticationHelper');
+const ErrorHelper = require('../helpers/errorHelper');
 
 handler.post('/login', (req, res, next) => {
   const user = req.body.user;

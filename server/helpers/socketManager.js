@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const socketIO = require('socket.io');
-const sockets = require('~/helpers/sockets');
+const sockets = require('./sockets');
 
 // TODO: Singleton client
 class SocketManager {

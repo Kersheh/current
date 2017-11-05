@@ -4,11 +4,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const config = require('config');
-const routes = require('~/handlers');
-const SocketManager = require('~/helpers/socketManager');
-const db = require('~/helpers/databaseManager');
-const syncLibrary = require('~/helpers/syncLibrary');
-const authenticationHelper = require('~/helpers/authenticationHelper');
+const routes = require('./handlers');
+const SocketManager = require('./helpers/socketManager');
+const db = require('./helpers/databaseManager');
+const syncLibrary = require('./helpers/syncLibrary');
+const authenticationHelper = require('./helpers/authenticationHelper');
 
 const app = express();
 const server = http.createServer(app);

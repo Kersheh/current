@@ -1,4 +1,4 @@
-const player = require('~/helpers/VideoManager');
+const player = require('../videoManager');
 
 function socket(io) {
   const namespace = io.namespace('player');
