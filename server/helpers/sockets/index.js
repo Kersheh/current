@@ -1,6 +1,6 @@
-const chat = require('~/helpers/sockets/chat');
-const metadata = require('~/helpers/sockets/metadata');
-const player = require('~/helpers/sockets/player');
+const chat = require('./chat');
+const metadata = require('./metadata');
+const player = require('./player');
 
 module.exports = {
   chat,

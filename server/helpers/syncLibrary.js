@@ -2,9 +2,9 @@ const _ = require('lodash');
 const path = require('path');
 const watch = require('node-watch');
 const Promise = require('bluebird');
-const fileHelper = require('~/helpers/fileHelper');
-const ffmpegHelper = require('~/helpers/ffmpegHelper');
-const db = require('~/helpers/databaseManager');
+const fileHelper = require('./fileHelper');
+const ffmpegHelper = require('./ffmpegHelper');
+const db = require('./databaseManager');
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 

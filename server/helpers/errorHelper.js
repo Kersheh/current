@@ -1,4 +1,4 @@
-const logger = require('~/helpers/logHelper');
+const logger = require('./logHelper');
 
 class ErrorHelper extends Error {
   constructor(err) {

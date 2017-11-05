@@ -6,7 +6,7 @@
     "start": "gulp dev"
   },
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "config": "^1.27.0",
@@ -18,8 +18,7 @@
     "moment": "^2.18.1",
     "mongoose": "^4.12.4",
     "node-watch": "^0.5.5",
-    "socket.io": "^2.0.3",
-    "wavy": "^1.0.4"
+    "socket.io": "^2.0.3"
   },
   "devDependencies": {
     "eslint": "^4.7.2",

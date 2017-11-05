@@ -2,8 +2,8 @@ const _ = require('lodash');
 const config = require('config');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-const ErrorHelper = require('~/helpers/errorHelper');
-const models = require('~/models');
+const ErrorHelper = require('./errorHelper');
+const models = require('../models');
 
 const DB_URL = config.get('DATABASE.URL');
 mongoose.Promise = Promise;

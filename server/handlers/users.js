@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const handler = require('express').Router();
-const db = require('~/helpers/databaseManager');
+const db = require('../helpers/databaseManager');
 
 handler.get('/', (req, res, next) => {
   db.getUsers().then((users) => {

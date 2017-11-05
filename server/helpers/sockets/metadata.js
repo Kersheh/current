@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const db = require('~/helpers/databaseManager');
+const db = require('../databaseManager');
 
 function socket(io) {
   const namespace = io.namespace('metadata');
