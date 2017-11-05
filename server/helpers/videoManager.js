@@ -9,14 +9,16 @@ class VideoManager {
 
   play() {
     const ctrl = this;
-    ctrl.playing = true;
-    this.player = setInterval(() => {
-      ctrl.timestamp += 1;
-      if(ctrl.timestamp >= ctrl.duration) {
-        ctrl.playing = false;
-        clearInterval(this);
-      }
-    }, 1000);
+    if(!ctrl.playing) {
+      ctrl.playing = true;
+      ctrl.player = setInterval(() => {
+        ctrl.timestamp += 1;
+        if(ctrl.timestamp >= ctrl.duration) {
+          ctrl.playing = false;
+          clearInterval(this);
+        }
+      }, 1000);
+    }
   }
 
   pause() {
@@ -31,6 +33,7 @@ class VideoManager {
   }
 
   changeVideo(id, duration) {
+    this.pause();
     this.id = id;
     this.duration = duration;
     this.timestamp = 0;
