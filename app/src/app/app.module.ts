@@ -11,6 +11,7 @@ import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 
 import { VideoService } from './shared/video.service';
 import { LoginService } from './shared/login.service';
+import { ProxyService } from './shared/proxy.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoginService } from './shared/login.service';
   ],
   providers: [
     VideoService,
-    LoginService
+    LoginService,
+    ProxyService
   ],
   bootstrap: [AppComponent]
 })
