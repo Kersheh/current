@@ -63,7 +63,7 @@ syncLibrary.syncVideoLibrary()
   });
 
 sockets.io.on('connect', (socket) => {
-  // console.log('socket connected');
+  console.log('socket connected');
 });
 
 // Safely shutdown mongo database on server shutdown
