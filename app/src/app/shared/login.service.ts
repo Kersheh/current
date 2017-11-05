@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { ProxyService } from './proxy.service';
 
 @Injectable()
 export class LoginService {
@@ -7,8 +8,9 @@ export class LoginService {
   private body;
 
   constructor(
-    private http: Http
-  ) { }
+    private http: Http,
+    private proxy: ProxyService
+  ) {}
 
   login(username, password) {
     this.body = {
@@ -18,7 +20,7 @@ export class LoginService {
       }
     };
 
-    return this.http.post('http://127.0.0.1:3000/auth/login', <JSON>this.body, { withCredentials: true })
+    return this.proxy.post('http://127.0.0.1:3000/auth/login', this.body, true)
       .map((res: Response) => console.log(res));
   }
 
@@ -29,7 +31,7 @@ export class LoginService {
       }
     };
 
-    return this.http.post('http://127.0.0.1:3000/auth/logout', <JSON>this.body)
+    return this.proxy.post('http://127.0.0.1:3000/auth/logout', this.body)
       .map((res: Response) => console.log(res));
   }
 }
