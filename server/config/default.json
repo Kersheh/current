@@ -1,6 +1,11 @@
 {
   "SERVER" : {
-    "PORT": 3000
+    "PORT": 3000,
+    "CORS": {
+      "ORIGIN": [
+        "http://localhost:4200"
+      ]
+    }
   },
   "DATABASE": {
     "URL": "mongodb://localhost:27017/current",
@@ -8,6 +13,9 @@
   },
   "SESSION": {
     "SECRET": "MEYCQQCvv2AaDKyp42KdswBqreml2m5GrJgjzjlyYi3c6jEd",
-    "MAX_AGE_HRS": 4
+    "MAX_AGE_HRS": 4,
+    "COOKIE": {
+      "DOMAIN": "127.0.0.1"
+    }
   }
 }

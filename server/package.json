@@ -19,6 +19,7 @@
     "moment": "^2.18.1",
     "mongoose": "^4.12.4",
     "node-watch": "^0.5.5",
+    "session-memory-store": "^0.2.2",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {

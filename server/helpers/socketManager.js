@@ -4,8 +4,13 @@ const sockets = require('./sockets');
 
 // TODO: Singleton client
 class SocketManager {
-  constructor(server) {
-    this.io = socketIO(server);
+  constructor(server, sessionMiddleware) {
+    this.io = socketIO(server, {
+      serveClient: false
+    });
+    this.io.use((socket, next) => {
+      sessionMiddleware(socket.request, socket.request.res, next);
+    });
     _.each(sockets, (socket) => socket(this));
   }
 
