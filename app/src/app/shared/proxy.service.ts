@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Request } from '@angular/http';
+import { Http, Request, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
@@ -17,10 +17,14 @@ export class ProxyService {
     return this.http.get(url, options);
   }
 
-  post(url: string, body, credentials = false) {
+  post(url: string, body = {}) {
     const json = <JSON>body;
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
     const options = {
-      withCredentials: credentials
+      headers: headers,
+      withCredentials: true
     };
     return this.http.post(url, json, options);
   }
