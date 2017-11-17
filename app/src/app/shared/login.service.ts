@@ -20,10 +20,10 @@ export class LoginService {
       }
     };
 
-    return this.proxy.post('http://127.0.0.1:3000/auth/login', this.body, true);
+    return this.proxy.post('http://127.0.0.1:3000/auth/login', this.body);
   }
 
   logout() {
-    return this.proxy.post('http://127.0.0.1:3000/auth/logout', {}, true);
+    return this.proxy.post('http://127.0.0.1:3000/auth/logout');
   }
 }

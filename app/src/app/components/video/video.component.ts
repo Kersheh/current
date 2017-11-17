@@ -8,7 +8,7 @@ import * as io from 'socket.io-client';
   styleUrls: ['./video.component.scss']
 })
 export class VideoComponent {
-  private static socket_url = 'http://localhost:3000/socket/player';
+  private static socket_url = 'http://127.0.0.1:3000/socket/player';
   private socket;
   video_url: string;
 
