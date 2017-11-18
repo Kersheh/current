@@ -1,9 +1,13 @@
+const authenticationHelper = require('../authenticationHelper');
+
 function socket(io) {
   const namespace = io.namespace('chat');
 
   namespace.on('connect', (socket) => {
-    socket.on('message', (message) => {
-      socket.broadcast.emit('message', message);
+    authenticationHelper.authenticateSocket(socket, () => {
+      socket.on('message', (message) => {
+        socket.broadcast.emit('message', message);
+      });
     });
   });
 }
