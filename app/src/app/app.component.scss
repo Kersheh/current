@@ -44,3 +44,26 @@
 video-list {
   height: 100%;
 }
+
+#github-link {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
+  transition: opacity .2s ease-out;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.icon {
+  display: block;
+  background-size: contain;
+
+  &-github {
+    width: 24px;
+    height: 24px;
+    background-image: url('/assets/icons/icon-github.svg');
+  }
+}
