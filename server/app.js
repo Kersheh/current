@@ -44,6 +44,9 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.get('*', authenticationHelper.authenticate);
+sockets.io.on('connect', (socket) => {
+  // console.log('socket connected');
+});
 
 // TODO: Declutter app.js with route loader
 app.use('/auth', routes.auth);
@@ -69,10 +72,6 @@ syncLibrary.syncVideoLibrary()
   }).catch(() => {
     console.log('\x1b[31m', 'SEVERE ERROR: Server restart required.');
   });
-
-sockets.io.on('connect', (socket) => {
-  // console.log('socket connected');
-});
 
 // Safely shutdown mongo database on server shutdown
 process.on('SIGINT', () => {

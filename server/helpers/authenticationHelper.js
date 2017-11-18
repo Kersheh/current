@@ -44,6 +44,24 @@ function authenticate(req, res, next) {
     });
 }
 
+function authenticateSocket(socket, next) {
+  const req = {
+    session: socket.request.session,
+    sessionID: socket.request.sessionID
+  };
+
+  authenticate(req, {}, (err) => {
+    if(err) {
+      socket.emit('err', {
+        message: err.message
+      });
+      socket.disconnect();
+    } else {
+      next();
+    }
+  });
+}
+
 function hashPassword(password) {
   return bcrypt.hash(password, SALT_ROUNDS);
 }
@@ -67,6 +85,7 @@ function _isExpired(expiry) {
 
 module.exports = {
   authenticate,
+  authenticateSocket,
   hashPassword,
   comparePassword
 }
