@@ -9,6 +9,10 @@ const config = require('config');
 
 const DB_PATH = config.get('DATABASE.PATH');
 
+function errorHandler(err) {
+  console.log(`Error occurred in plugin ${err.plugin}.`);
+}
+
 gulp.task('lint', () => {
   gulp.src('./**/*.js')
     .pipe(eslint())
@@ -30,7 +34,8 @@ gulp.task('run-tests', () => {
       globals: {
         should: require('should')
       }
-    }));
+    }).on('error', errorHandler))
+    .pipe(process.stdout);
 });
 
 gulp.task('nodemon', () => {

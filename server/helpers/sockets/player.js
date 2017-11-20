@@ -1,8 +1,9 @@
-const player = require('../videoManager');
+const VideoManager = require('../videoManager');
 const authenticationHelper = require('../authenticationHelper');
 
 function socket(io) {
   const namespace = io.namespace('player');
+  const player = new VideoManager();
 
   namespace.on('connect', (socket) => {
     authenticationHelper.authenticateSocket(socket, () => {

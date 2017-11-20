@@ -16,6 +16,7 @@ const ORIGIN = config.get('SERVER.CORS.ORIGIN');
 const SECRET = config.get('SESSION.SECRET');
 const MAX_AGE = config.get('SESSION.MAX_AGE_HRS') * 3600000;
 const COOKIE_DOMAIN = config.get('SESSION.COOKIE.DOMAIN');
+const DB_URL = config.get('DATABASE.URL');
 
 const app = express();
 const server = http.createServer(app);
@@ -63,8 +64,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Sync video library with database before starting server
-syncLibrary.syncVideoLibrary()
+db.connect(DB_URL)
+  .then(() => syncLibrary.syncVideoLibrary())
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Server running on ${PORT}`);
@@ -74,10 +75,14 @@ syncLibrary.syncVideoLibrary()
   });
 
 // Safely shutdown mongo database on server shutdown
-process.on('SIGINT', () => {
+process
+  .on('SIGINT', shutdown)
+  .on('SIGTERM', shutdown);
+
+function shutdown() {
   console.log('\nServer shutting down...');
-  return db.mongoPromise.then((db) => {
+  db.disconnect(() => {
     console.log('Database shutting down...');
-    return db.close();
+    process.exit(0);
   });
-});
+}
