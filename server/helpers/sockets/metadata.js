@@ -14,7 +14,7 @@ function socket(io) {
               message: `Failed to fetch metadata of video id '${id}'`
             });
           } else {
-            socket.emit('data', metadata)
+            socket.emit('data', metadata);
           }
         });
       });

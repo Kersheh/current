@@ -6,7 +6,7 @@ const expressSession = require('express-session');
 const MemoryStore = require('session-memory-store');
 const config = require('config');
 const routes = require('./handlers');
-const SocketManager = require('./helpers/socketManager');
+const socketManager = require('./helpers/socketManager');
 const db = require('./helpers/databaseManager');
 const syncLibrary = require('./helpers/syncLibrary');
 const authenticationHelper = require('./helpers/authenticationHelper');
@@ -33,7 +33,6 @@ const session = expressSession({
     domain: COOKIE_DOMAIN
   }
 });
-const sockets = new SocketManager(server, session);
 
 app.use(session);
 app.use(cors({
@@ -45,9 +44,6 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.get('*', authenticationHelper.authenticate);
-sockets.io.on('connect', (socket) => {
-  // console.log('socket connected');
-});
 
 // TODO: Declutter app.js with route loader
 app.use('/auth', routes.auth);
@@ -63,6 +59,8 @@ app.use((err, req, res, next) => {
     status: err.status
   });
 });
+
+socketManager.init(server, session);
 
 db.connect(DB_URL)
   .then(() => syncLibrary.syncVideoLibrary())
