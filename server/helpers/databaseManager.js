@@ -66,7 +66,7 @@ class DatabaseManager {
         throw new ErrorHelper({
           message: `User ${user.username} already exists.`,
           status: 409
-        })
+        });
       });
   }
 
@@ -119,7 +119,7 @@ class DatabaseManager {
           throw new ErrorHelper({
             message: `Session for ${sessionID} not found.`,
             status: 404
-          })
+          });
         }
       });
   }

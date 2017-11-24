@@ -1,25 +1,20 @@
 const path = require('path');
-const chai = require('chai');
-const expect = chai.expect;
-const chaiAsPromised = require('chai-as-promised');
 const sinon = require('sinon');
 const fileHelper = require('../../helpers/fileHelper');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const dbMock = require('../mock/database-mock');
-const logMock = require('../mock/log-mock');
 
 describe('fileHelper unit tests', () => {
   let sandbox;
 
   before(() => {
-    chai.use(chaiAsPromised);
     sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
     sandbox.restore();
-    dbMock.cleanupStubs();
+    dbMock.cleanupMock();
   });
 
   it('should successfully parse filename and hash name to video id', () => {

@@ -7,11 +7,11 @@ function stubDatabaseManagerMethod(method, data) {
   sandbox.stub(db, method).resolves(data);
 }
 
-function cleanupStubs() {
+function cleanupMock() {
   sandbox.restore();
 }
 
 module.exports = {
   stubDatabaseManagerMethod,
-  cleanupStubs
+  cleanupMock
 };

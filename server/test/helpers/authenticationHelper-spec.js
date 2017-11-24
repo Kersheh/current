@@ -1,19 +1,11 @@
-const chai = require('chai');
-const expect = chai.expect;
-const chaiAsPromised = require('chai-as-promised');
 const bcrypt = require('bcryptjs');
 const db = require('../../helpers/databaseManager');
 const authenticationHelper = require('../../helpers/authenticationHelper');
 const dbMock = require('../mock/database-mock');
-const logMock = require('../mock/log-mock');
 
 describe('authenticationHelper unit tests', () => {
-  before(() => {
-    chai.use(chaiAsPromised);
-  });
-
   afterEach(() => {
-    dbMock.cleanupStubs();
+    dbMock.cleanupMock();
   });
 
   it('should compare password with non-existent user and throw error', () => {

@@ -31,9 +31,7 @@ gulp.task('run-tests', () => {
         reportFilename: 'current-be-test-report'
       },
       recursive: true,
-      globals: {
-        should: require('should')
-      }
+      exit: true
     }).on('error', errorHandler))
     .pipe(process.stdout);
 });

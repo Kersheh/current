@@ -1,4 +1,3 @@
-const expect = require('chai').expect;
 const VideoManager = require('../../helpers/videoManager');
 
 describe('videoManager unit tests', () => {
