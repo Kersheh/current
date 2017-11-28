@@ -25,7 +25,7 @@ before(() => {
   global.chai.use(require('chai-as-promised'));
   global.expect = chai.expect;
   global.request = require('supertest')('http://localhost:3001');
-
+  global.dbMock = require('./database-mock');
   global.authMock = {
     authValid: () => {
       authStub.callsFake((req, res, next) => {

@@ -3,7 +3,6 @@ const sinon = require('sinon');
 const fileHelper = require('../../helpers/fileHelper');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
-const dbMock = require('../mock/database-mock');
 
 describe('fileHelper unit tests', () => {
   let sandbox;

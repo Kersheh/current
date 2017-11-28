@@ -1,6 +1,3 @@
-const authenticationHelper = require('../../helpers/authenticationHelper');
-const dbMock = require('../mock/database-mock');
-
 describe('videos handler unit tests', () => {
   describe('[GET] /', () => {
     afterEach(() => {

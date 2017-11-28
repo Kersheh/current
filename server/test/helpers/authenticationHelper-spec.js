@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const db = require('../../helpers/databaseManager');
 const authenticationHelper = require('../../helpers/authenticationHelper');
-const dbMock = require('../mock/database-mock');
 
 describe('authenticationHelper unit tests', () => {
   afterEach(() => {

@@ -6,7 +6,8 @@
     "chai": true,
     "expect": true,
     "request": true,
-    "authMock": true
+    "authMock": true,
+    "dbMock": true
   },
   "rules": {
     "no-unused-expressions": 0,
