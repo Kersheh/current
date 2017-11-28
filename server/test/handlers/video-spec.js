@@ -4,7 +4,7 @@ const fs = require('fs');
 const fileHelper = require('../../helpers/fileHelper');
 
 describe('video handler unit tests', () => {
-  describe('[GET] /:id', () => {
+  describe('[GET] /video/:id', () => {
     let sandbox;
     const VIDEO_ID = 'some_random_id';
 

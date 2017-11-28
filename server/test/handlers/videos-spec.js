@@ -1,5 +1,5 @@
 describe('videos handler unit tests', () => {
-  describe('[GET] /', () => {
+  describe('[GET] /videos/', () => {
     afterEach(() => {
       dbMock.cleanupMock();
     });
@@ -17,7 +17,7 @@ describe('videos handler unit tests', () => {
       return request.get('/videos').expect(200, VIDEOS);
     });
 
-    it('should return 206 with empty list', () => {
+    it('should return 204 with empty list', () => {
       authMock.authValid();
       dbMock.stubDatabaseManagerMethod('getVideos', []);
 
