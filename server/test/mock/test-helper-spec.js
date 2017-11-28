@@ -23,6 +23,7 @@ before(() => {
   require('../../app');
   global.chai = require('chai');
   global.chai.use(require('chai-as-promised'));
+  global.chai.use(require('chai-stream'));
   global.expect = chai.expect;
   global.request = require('supertest')('http://localhost:3001');
   global.dbMock = require('./database-mock');
