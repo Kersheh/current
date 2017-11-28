@@ -14,7 +14,6 @@ describe('video handler unit tests', () => {
 
     afterEach(() => {
       sandbox.restore();
-      dbMock.cleanupMock();
     });
 
     it('should return 200 piping video stream', () => {
