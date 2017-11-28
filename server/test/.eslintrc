@@ -5,7 +5,8 @@
   "globals": {
     "chai": true,
     "expect": true,
-    "request": true
+    "request": true,
+    "authMock": true
   },
   "rules": {
     "no-unused-expressions": 0,

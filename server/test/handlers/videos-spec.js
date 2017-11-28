@@ -1,4 +1,3 @@
-const nock = require('nock');
 const authenticationHelper = require('../../helpers/authenticationHelper');
 const dbMock = require('../mock/database-mock');
 
@@ -15,18 +14,22 @@ describe('videos handler unit tests', () => {
         { id: '5f7625a2', name: 'video3', type: 'avi' }
       ];
 
+      authMock.authValid();
       dbMock.stubDatabaseManagerMethod('getVideos', VIDEOS);
 
       return request.get('/videos').expect(200, VIDEOS);
     });
 
     it('should return 206 with empty list', () => {
+      authMock.authValid();
       dbMock.stubDatabaseManagerMethod('getVideos', []);
 
       return request.get('/videos').expect(204, []);
     });
 
     it('should return 401 access denied', () => {
+      authMock.authInvalid();
+
       return request.get('/videos').expect(401);
     });
   });
