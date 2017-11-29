@@ -28,7 +28,7 @@ function readVideoFiles() {
     });
 }
 
-function streamVideo(id, range = 0) {
+function streamVideo(id, range) {
   return db.getVideo(id).then((video) => {
     let filePath;
 
@@ -50,6 +50,8 @@ function streamVideo(id, range = 0) {
             status: 500,
             level: 1
           });
+        } else {
+          throw err;
         }
       }).then((stat) => {
         let stream, head, status;

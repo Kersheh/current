@@ -9,7 +9,7 @@ class VideoManager {
 
   play() {
     const ctrl = this;
-    if(!ctrl.playing) {
+    if(!ctrl.playing && ctrl.id !== null) {
       ctrl.playing = true;
       ctrl.player = setInterval(() => {
         ctrl.timestamp += 1;
@@ -28,25 +28,34 @@ class VideoManager {
     }
   }
 
+  reset() {
+    this.pause();
+    this.changeTime(0);
+    this.play();
+  }
+
   changeTime(timestamp) {
     this.timestamp = timestamp;
   }
 
-  changeVideo(id, duration) {
+  changeVideo(id, duration, play = true) {
     this.pause();
     this.id = id;
     this.duration = duration;
     this.timestamp = 0;
-    this.play();
+    if(play) {
+      this.play();
+    }
   }
 
   getPlayerState() {
     return {
       id: this.id,
+      duration: this.duration,
       timestamp: this.timestamp,
       playing: this.playing
     };
   }
 }
 
-module.exports = new VideoManager();
+module.exports = VideoManager;

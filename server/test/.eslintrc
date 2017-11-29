@@ -1,0 +1,16 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "chai": true,
+    "expect": true,
+    "request": true,
+    "authMock": true,
+    "dbMock": true
+  },
+  "rules": {
+    "no-unused-expressions": 0,
+    "no-unused-vars": 0
+  }
+}

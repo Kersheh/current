@@ -28,7 +28,7 @@ Database path `DB_PATH` set in `server/config/default.json`
 
 ## Links
 
-#### Frontend colour pallet
+#### Frontend Colour Pallet
 https://coolors.co/30c5ff-2a2d34-5c946e-dce0d9-020202
 
 #### Trello

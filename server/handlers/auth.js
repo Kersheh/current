@@ -10,7 +10,7 @@ handler.post('/login', (req, res, next) => {
   if(_.isNil(user) || _.isNil(user.username) || _.isNil(user.password)) {
     next(new ErrorHelper({
       message: 'Username/password not given.',
-      status: 401
+      status: 400
     }));
   } else {
     authenticationHelper.comparePassword(user.password, user.username)
@@ -41,7 +41,9 @@ handler.post('/logout', (req, res, next) => {
 
   db.removeSession(sessionID)
     .then(() => {
-      req.session.destroy();
+      if(!_.isUndefined(req.session)) {
+        req.session.destroy();
+      }
       res.status(200).send();
     }).catch((err) => {
       next(new ErrorHelper({

@@ -1,30 +1,27 @@
 const _ = require('lodash');
-const config = require('config');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const ErrorHelper = require('./errorHelper');
 const models = require('../models');
 
-const DB_URL = config.get('DATABASE.URL');
 mongoose.Promise = Promise;
 
 class DatabaseManager {
-  constructor(url) {
-    this.mongoPromise = this.connect(url)
-      .catch(() => {
-        console.log('\x1b[31m', 'SEVERE ERROR: Server restart required.');
+  connect(url) {
+    return mongoose.connect(url, {
+      useMongoClient: true,
+      promiseLibrary: Promise
+    }).catch(() => {
+      throw new ErrorHelper({
+        message: `Failed to connect database to ${url}.`,
+        status: 500,
+        level: 1
       });
+    });
   }
 
-  connect(url) {
-    return mongoose.connect(url, { useMongoClient: true })
-      .catch(() => {
-        throw new ErrorHelper({
-          message: `Failed to connect database to ${url}.`,
-          status: 500,
-          level: 1
-        });
-      });
+  disconnect(cb) {
+    mongoose.connection.close(() => cb());
   }
 
   /*
@@ -69,7 +66,7 @@ class DatabaseManager {
         throw new ErrorHelper({
           message: `User ${user.username} already exists.`,
           status: 409
-        })
+        });
       });
   }
 
@@ -122,7 +119,7 @@ class DatabaseManager {
           throw new ErrorHelper({
             message: `Session for ${sessionID} not found.`,
             status: 404
-          })
+          });
         }
       });
   }
@@ -140,4 +137,4 @@ class DatabaseManager {
   }
 }
 
-module.exports = new DatabaseManager(DB_URL);
+module.exports = new DatabaseManager();

@@ -2,9 +2,8 @@ const _ = require('lodash');
 const socketIO = require('socket.io');
 const sockets = require('./sockets');
 
-// TODO: Singleton client
 class SocketManager {
-  constructor(server, sessionMiddleware) {
+  init(server, sessionMiddleware) {
     this.io = socketIO(server, {
       serveClient: false
     });
@@ -19,4 +18,4 @@ class SocketManager {
   }
 }
 
-module.exports = SocketManager;
+module.exports = new SocketManager();

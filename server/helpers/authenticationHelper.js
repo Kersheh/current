@@ -87,5 +87,6 @@ module.exports = {
   authenticate,
   authenticateSocket,
   hashPassword,
-  comparePassword
-}
+  comparePassword,
+  _isExpired
+};
