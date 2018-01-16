@@ -1,8 +1,10 @@
-// app template
+// app
 import AppTemplate from './app.template.html';
+import AppController from './app.controller';
 
 // modules
 import './components/components.module';
+import './services/services.module';
 
 // constants
 import './shared/constants';
@@ -11,30 +13,25 @@ import './shared/constants';
 import '../scss/styles.scss';
 import '../scss/app.scss';
 
-const currentApp = angular.module('currentApp', [
+angular.module('currentApp', [
   'ui.router',
-  'currentApp.components'
-]);
-
-currentApp.config(($locationProvider) => {
+  'currentApp.components',
+  'currentApp.services'
+]).config(($locationProvider) => {
   $locationProvider.html5Mode(true);
   $locationProvider.hashPrefix('!');
-});
-
-currentApp.config(($stateProvider) => {
+}).config(($stateProvider) => {
   $stateProvider.state('home', {
     url: '/',
-    template: AppTemplate
+    template: AppTemplate,
+    controller: AppController,
+    controllerAs: '$ctrl'
   });
 
   $stateProvider.state('404', {
     url: '*path',
     template: '<h1>404</h1>'
   });
-});
+}).run(() => {
 
-currentApp.run(($rootScope, $state) => {
-  $rootScope.$on('unauthorized', () => {
-    $state.transitionTo('login');
-  });
 });

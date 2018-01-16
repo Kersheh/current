@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SassWebpackPlugin = require('sass-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -18,7 +17,7 @@ module.exports = {
   devtool: 'eval-source-map',
   devServer: {
     compress: true,
-    port: 3000,
+    port: 4200,
     open: true
   },
   watch: true,
