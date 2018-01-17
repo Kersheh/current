@@ -23,6 +23,13 @@ module.exports = {
   watch: true,
   module: {
     rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'eslint-loader',
+      options: {
+        cache: true
+      }
+    }, {
       test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
       loader: 'file-loader'
     }, {

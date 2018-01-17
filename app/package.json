@@ -11,6 +11,7 @@
     "css-loader": "^0.28.8",
     "eslint": "^4.15.0",
     "eslint-config-angular": "^0.5.0",
+    "eslint-loader": "^1.9.0",
     "eslint-plugin-angular": "^3.1.1",
     "file-loader": "^1.1.6",
     "html-loader": "^0.5.4",
@@ -21,5 +22,6 @@
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.0"
-  }
+  },
+  "dependencies": {}
 }

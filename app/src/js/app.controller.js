@@ -1,19 +1,23 @@
 export default class AppController {
-  constructor($scope, VideoService, AuthService) {
+  constructor($rootScope, $scope, VideoService, AuthService) {
+    this.$rootScope = $rootScope;
     this.$scope = $scope;
-    this.auth = AuthService;
-    this.video = VideoService;
+    this.AuthService = AuthService;
+    this.VideoService = VideoService;
 
-    this.videos = [];
+    this.authenticated = false;
   }
 
   $onInit() {
-    // this.auth.logout();
-    this.auth.login('test', 'pass')
-      .then(() => this.video.getVideoList())
-      .then((videos) => {
-        this.videos = videos;
-        this.video_url = this.video.getVideoUrl(videos[0].id);
+    this.AuthService.validateAuth()
+      .then((auth) => {
+        if(auth) {
+          this.authenticated = true;
+          this.VideoService.getVideoList()
+            .then((videos) => {
+              this.video_url = this.VideoService.getVideoUrl(videos[0].id);
+            });
+        }
       });
   }
 }

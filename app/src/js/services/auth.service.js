@@ -17,4 +17,10 @@ export default class AuthService {
   logout() {
     return this.proxy.post('http://127.0.0.1:3000/auth/logout');
   }
+
+  validateAuth() {
+    return this.proxy.post('http://127.0.0.1:3000/auth')
+      .then(() => true)
+      .catch(() => false);
+  }
 }

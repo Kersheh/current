@@ -5,7 +5,8 @@ export default class VideoService {
 
   getVideoList() {
     return this.proxy.get('http://127.0.0.1:3000/videos')
-      .then((res) => { return res.data });
+      .then((res) => res.data)
+      .catch((err) => console.log(err));
   }
 
   getVideoUrl(id) {
