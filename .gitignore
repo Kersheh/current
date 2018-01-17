@@ -1,8 +1,14 @@
 # General
 .DS_Store
 npm-debug.log
-*/node_modules
+node_modules
 !.gitkeep
+.ideas
+
+# App
+/app/dist
+/app/src.bak
+/app/temp/*
 
 # Server
 /server/log

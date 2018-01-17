@@ -3,7 +3,8 @@
   "version": "0.0.7",
   "main": "app.js",
   "scripts": {
-    "start": "gulp dev"
+    "start": "gulp dev",
+    "test": "gulp test"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

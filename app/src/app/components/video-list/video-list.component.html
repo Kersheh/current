@@ -1,9 +1,0 @@
-<div *ngIf="!hide">
-  <div id="video-list-controls">all videos <button (click)="load()">refresh</button></div>
-  <div class="flex full-height container">
-    <div *ngIf="!videos || videos.length < 1">no videos found</div>
-    <div *ngFor="let video of videos" [ngStyle]="{'background-color': randomColor()}" class="video">
-      <span class="video-name noselect" (click)="watch(video)">{{ video.name }}</span>
-    </div>
-  </div>
-</div>

@@ -1,0 +1,22 @@
+<div class="app-container">
+  <header authenticated="$ctrl.authenticated"></header>
+
+  <div class="login-container" ng-hide="$ctrl.authenticated">
+    <login authenticated="$ctrl.authenticated"></login>
+  </div>
+
+  <div class="app-content" ng-show="$ctrl.authenticated">
+    <div class="video-container">
+      <video width="800" src="{{$ctrl.video_url}}" controls>
+          your browser does not support HTML5 video
+      </video>
+      <button (click)="close()">close</button>
+      <button (click)="play()">play</button>
+      <button (click)="pause()">pause</button>
+    </div>
+  </div>
+
+  <div class="github-link">
+    <a class="icon icon-github" href="https://github.com/Kersheh/current" target="_blank"></a>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+.icon {
+  display: block;
+  background-size: contain;
+
+  &-github {
+    width: 24px;
+    height: 24px;
+    background-image: url('./icons/icon-github.svg');
+  }
+}

@@ -16,10 +16,10 @@ handler.post('/login', (req, res, next) => {
     authenticationHelper.comparePassword(user.password, user.username)
       .then((auth) => {
         if(!auth) {
-          next(new ErrorHelper({
+          throw new ErrorHelper({
             message: 'Incorrect password.',
             status: 400
-          }));
+          });
         } else {
           return db.storeSession({
             username: user.username,
@@ -28,10 +28,7 @@ handler.post('/login', (req, res, next) => {
           }).then(() => res.status(200).send());
         }
       }).catch((err) => {
-        next(new ErrorHelper({
-          message: err.message,
-          status: err.status
-        }));
+        next(err);
       });
   }
 });
@@ -51,6 +48,13 @@ handler.post('/logout', (req, res, next) => {
         status: err.status
       }));
     });
+});
+
+handler.post('/', (req, res, next) => {
+  authenticationHelper.authenticate(req, res, (auth) => {
+    const status = _.isUndefined(auth) ? 200 : 401;
+    res.status(status).send();
+  });
 });
 
 module.exports = handler;

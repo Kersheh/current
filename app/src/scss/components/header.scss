@@ -1,0 +1,40 @@
+.header {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  background-color: $rich-black;
+  height: 100px;
+  top: 0;
+
+  .title {
+    color: $current-blue;
+    font-size: 1.5em;
+    display: inline-block;
+    border: 1px solid $current-blue;
+
+    &__text {
+      text-align: center;
+    }
+
+    &__logo {
+      width: 100px;
+      overflow: hidden;
+
+      & svg {
+        position: relative;
+        left: -50px;
+        width: 200px;
+        animation: wave 2s linear infinite;
+      }
+
+      @keyframes wave {
+        0% {
+          left: -80px;
+        }
+        100% {
+          left: 0;
+        }
+      }
+    }
+  }
+}
